@@ -24,7 +24,7 @@ export default function Hero({ onWorkClick }: HeroProps) {
       {/* Balatro Fluid Shader Background */}
       <div className="absolute inset-0 z-0">
         <Balatro
-          isRotate={false}
+          isRotate={true}
           spinSpeed={1.5}
           mouseInteraction={true}
           pixelFilter={1200}
