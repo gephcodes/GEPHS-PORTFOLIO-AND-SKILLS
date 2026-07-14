@@ -1,0 +1,6 @@
+{
+  "name": "Gephel Chingtham Portfolio",
+  "description": "An ultra-minimalist, high-contrast, premium text-first personal portfolio website for Gephel Chingtham.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
