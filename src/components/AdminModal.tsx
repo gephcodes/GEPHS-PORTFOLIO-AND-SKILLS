@@ -66,7 +66,18 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
     return () => clearInterval(interval);
   }, [lockoutTime]);
 
-  const loadApplications = () => {
+  const loadApplications = async () => {
+    try {
+      const response = await fetch('/api/applications');
+      if (response.ok) {
+        const data = await response.json();
+        setApplications(data);
+        return;
+      }
+    } catch (err) {
+      console.error('Failed to load applications from API, falling back to local storage:', err);
+    }
+
     try {
       const saved = localStorage.getItem('geph_work_applications');
       if (saved) {
@@ -109,7 +120,24 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
     }
   };
 
-  const handleDeleteApplication = (indexToDelete: number) => {
+  const handleDeleteApplication = async (indexToDelete: number) => {
+    const appToDelete = applications[indexToDelete];
+    if (!appToDelete) return;
+
+    if (appToDelete.id) {
+      try {
+        const response = await fetch(`/api/applications/${appToDelete.id}`, {
+          method: 'DELETE',
+        });
+        if (response.ok) {
+          loadApplications();
+          return;
+        }
+      } catch (err) {
+        console.error('Failed to delete application from API:', err);
+      }
+    }
+
     try {
       const updated = applications.filter((_, idx) => idx !== indexToDelete);
       localStorage.setItem('geph_work_applications', JSON.stringify(updated));
@@ -119,8 +147,21 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
     }
   };
 
-  const handleClearAll = () => {
-    if (window.confirm('Are you sure you want to purge all application records from local storage?')) {
+  const handleClearAll = async () => {
+    if (window.confirm('Are you sure you want to purge all application records from the server database?')) {
+      try {
+        const response = await fetch('/api/applications/clear', {
+          method: 'POST',
+        });
+        if (response.ok) {
+          setApplications([]);
+          localStorage.removeItem('geph_work_applications');
+          return;
+        }
+      } catch (err) {
+        console.error('Failed to clear applications on server:', err);
+      }
+
       try {
         localStorage.removeItem('geph_work_applications');
         setApplications([]);

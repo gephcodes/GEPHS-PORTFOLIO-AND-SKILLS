@@ -72,7 +72,7 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
     else if (current === 'trial') setActiveTab('screening');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate required fields
@@ -83,36 +83,59 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
 
     setStatus('submitting');
     
-    setTimeout(() => {
-      const newApp = {
-        name,
-        age,
-        schoolGrade,
-        instagram,
-        heardFrom,
-        hoursPerWeek,
-        freeTimes,
-        conflicts,
-        selectedSkills,
-        proofOfWork,
-        whyWork,
-        finishHardThing,
-        zeroInstructions,
-        okayWithFixedPay,
-        keepConfidential,
-        trialSubmission,
-        date: new Date().toLocaleString()
-      };
+    const newApp = {
+      name,
+      age,
+      schoolGrade,
+      instagram,
+      heardFrom,
+      hoursPerWeek,
+      freeTimes,
+      conflicts,
+      selectedSkills,
+      proofOfWork,
+      whyWork,
+      finishHardThing,
+      zeroInstructions,
+      okayWithFixedPay,
+      keepConfidential,
+      trialSubmission,
+      date: new Date().toLocaleString()
+    };
 
+    try {
+      const response = await fetch('/api/applications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newApp),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit application to backend');
+      }
+
+      const savedApp = await response.json();
+
+      // Also sync locally as a backup cache
+      const updated = [savedApp, ...localApplications];
+      localStorage.setItem('geph_work_applications', JSON.stringify(updated));
+      setLocalApplications(updated);
+      setStatus('success');
+    } catch (err) {
+      console.error('Error submitting application:', err);
+      // Fallback to storing in local storage
       try {
-        const updated = [newApp, ...localApplications];
+        const localApp = { ...newApp, id: 'local_' + Date.now() };
+        const updated = [localApp, ...localApplications];
         localStorage.setItem('geph_work_applications', JSON.stringify(updated));
         setLocalApplications(updated);
         setStatus('success');
       } catch (err) {
         setStatus('error');
       }
-    }, 1200);
+    }
   };
 
   const resetForm = () => {
