@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Check, ArrowRight, Sparkles, UploadCloud, AlertCircle, FileText, Compass } from 'lucide-react';
+import { X, Check, ArrowRight, Sparkles, AlertCircle, FileText, Compass } from 'lucide-react';
 
 interface WorkWithMeModalProps {
   isOpen: boolean;
@@ -569,24 +569,17 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
 
                           <div className="space-y-1.5">
                             <div className="flex justify-between items-center">
-                              <label className="font-mono text-[10px] text-zinc-400 uppercase block">Proof of Past Work</label>
-                              <span className="font-mono text-[9px] text-zinc-600">Links, repos, designs, posts, etc.</span>
+                              <label className="font-mono text-[10px] text-zinc-400 uppercase block">Description of Past Work</label>
+                              <span className="font-mono text-[9px] text-zinc-600">Describe your key projects and past experience</span>
                             </div>
                             <textarea
-                              rows={4}
+                              rows={6}
                               required
                               value={proofOfWork}
-                              placeholder="Paste URLs to Google Drive, Figma drafts, Github repos, social posts, or describe your personal projects..."
+                              placeholder="Please describe your best personal projects, professional accomplishments, or what you've built in detail..."
                               onChange={(e) => setProofOfWork(e.target.value)}
                               className="w-full rounded-none border border-zinc-800 bg-black p-3 font-sans text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors"
                             />
-                          </div>
-
-                          {/* File Drop area simulation */}
-                          <div className="border border-dashed border-zinc-800 p-4 text-center bg-zinc-950/20">
-                            <UploadCloud className="h-6 w-6 text-zinc-600 mx-auto mb-2" />
-                            <span className="font-mono text-[10px] text-zinc-500 uppercase block">Simulate Screenshot/Resume Drop</span>
-                            <span className="font-sans text-[10px] text-zinc-600 block mt-1">If you have file proof, describe or link it in the text area above.</span>
                           </div>
                         </div>
 
