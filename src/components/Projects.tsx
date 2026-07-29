@@ -11,7 +11,7 @@ export default function Projects() {
     {
       id: 'solvry',
       name: 'Solvry',
-      tag: 'Building Phase',
+      tag: 'Building',
       role: 'Founder / CEO',
       description: 'Anonymous peer support app for teens 13-19. You post anonymously and connect safely with peers going through the same thing.',
       detailedDescription: 'Built out of personal loss to combat teen isolation. Solvry gives teens facing grief, academic stress, rejection, or family struggles a safe, moderated space to post and connect.',
@@ -22,7 +22,7 @@ export default function Projects() {
         'Talk & heal; crisis keywords auto-display helplines',
         'Safe architecture: no DMs, daily moderation, toxic content blocked'
       ],
-      estimatedCompletion: 'December 30th'
+      link: 'https://solvry.onrender.com'
     },
     {
       id: 'stupidsimple',
@@ -164,7 +164,7 @@ export default function Projects() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((proj) => {
             const hasLink = !!proj.link;
-            const isBuilding = proj.tag === 'Building Phase';
+            const isBuilding = proj.tag.toLowerCase().includes('building');
 
             return (
               <div
