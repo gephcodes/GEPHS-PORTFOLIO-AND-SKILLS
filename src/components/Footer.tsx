@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Twitter, Instagram, Copy, Check } from 'lucide-react';
+import ShapeGrid from './ShapeGrid';
 
 export default function Footer() {
   const [copied, setCopied] = useState(false);
@@ -13,7 +14,21 @@ export default function Footer() {
 
   return (
     <footer id="contact" className="relative border-t border-zinc-800 bg-black px-6 pt-24 pb-12 md:px-12 lg:px-24 overflow-hidden">
-      <div className="mx-auto max-w-7xl">
+      {/* Background ShapeGrid Component */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <ShapeGrid
+          speed={0.8}
+          squareSize={50}
+          direction="down"
+          borderColor="#27272a"
+          hoverFillColor="#31adb8"
+          shape="square"
+          hoverTrailAmount={4}
+          className="w-full h-full opacity-50"
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl">
         
         {/* Centered Connection Matrix */}
         <div className="max-w-2xl mx-auto text-center space-y-12 mb-20">

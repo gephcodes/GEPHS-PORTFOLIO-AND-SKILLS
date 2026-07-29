@@ -7,6 +7,8 @@ export interface Project {
   detailedDescription: string;
   features: string[];
   link?: string;
+  whyBuilt?: string;
+  estimatedCompletion?: string;
 }
 
 export interface SkillCategory {

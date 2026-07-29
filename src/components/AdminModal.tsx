@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Lock, ShieldAlert, Check, Eye, Trash2, Calendar } from 'lucide-react';
+import { X, Lock, ShieldAlert, Check, Eye, Trash2, Calendar, RefreshCw, Zap } from 'lucide-react';
 
 interface AdminModalProps {
   isOpen: boolean;
@@ -15,6 +15,8 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
   const [lockoutTime, setLockoutTime] = useState<number | null>(null);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [applications, setApplications] = useState<any[]>([]);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Load lockout state on mount
   useEffect(() => {
@@ -67,28 +69,82 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
   }, [lockoutTime]);
 
   const loadApplications = async () => {
+    setIsSyncing(true);
+    let localSaved: any[] = [];
     try {
+      const saved = localStorage.getItem('geph_work_applications');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          localSaved = parsed.filter((a: any) => {
+            if (!a || typeof a !== 'object') return false;
+            if (a.id && typeof a.id === 'string' && a.id.startsWith('intel_')) return false;
+            const mockNames = ['Alex Rivera', 'Maya Lin', 'Marcus Vance'];
+            if (mockNames.includes(a.name)) return false;
+            return true;
+          });
+        }
+      }
+    } catch (e) {
+      console.error('Error parsing local storage applications:', e);
+    }
+
+    try {
+      // First, if local applications exist, attempt batch sync with backend
+      if (localSaved.length > 0) {
+        const syncRes = await fetch('/api/applications/sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(localSaved)
+        });
+        if (syncRes.ok) {
+          const syncedData = await syncRes.json();
+          setApplications(syncedData);
+          localStorage.setItem('geph_work_applications', JSON.stringify(syncedData));
+          setIsSyncing(false);
+          return;
+        }
+      }
+
+      // Standard API fetch
       const response = await fetch('/api/applications');
       if (response.ok) {
         const data = await response.json();
         setApplications(data);
-        return;
+        localStorage.setItem('geph_work_applications', JSON.stringify(data));
+      } else if (localSaved.length > 0) {
+        setApplications(localSaved);
       }
     } catch (err) {
       console.error('Failed to load applications from API, falling back to local storage:', err);
-    }
-
-    try {
-      const saved = localStorage.getItem('geph_work_applications');
-      if (saved) {
-        setApplications(JSON.parse(saved));
-      } else {
-        setApplications([]);
+      if (localSaved.length > 0) {
+        setApplications(localSaved);
       }
-    } catch {
-      setApplications([]);
+    } finally {
+      setIsSyncing(false);
     }
   };
+
+  // Live Sync Effect: Poll every 4 seconds & listen for submit events when authenticated & open
+  useEffect(() => {
+    if (isOpen && isAuthenticated) {
+      loadApplications();
+
+      const interval = setInterval(() => {
+        loadApplications();
+      }, 4000);
+
+      const handleSubmitted = () => {
+        loadApplications();
+      };
+      window.addEventListener('geph_application_submitted', handleSubmitted);
+
+      return () => {
+        clearInterval(interval);
+        window.removeEventListener('geph_application_submitted', handleSubmitted);
+      };
+    }
+  }, [isOpen, isAuthenticated]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -177,6 +233,17 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
+  const filteredApplications = applications.filter((app) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      (app.name && app.name.toLowerCase().includes(q)) ||
+      (app.instagram && app.instagram.toLowerCase().includes(q)) ||
+      (app.selectedSkills && app.selectedSkills.some((s: string) => s.toLowerCase().includes(q))) ||
+      (app.proofOfWork && app.proofOfWork.toLowerCase().includes(q))
+    );
+  });
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -199,6 +266,12 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
                 <span className="font-mono text-xs text-white uppercase tracking-wider">
                   Intel Core Access Panel / Secure Admin Interface
                 </span>
+                {isAuthenticated && (
+                  <span className="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 bg-emerald-950/60 border border-emerald-800 text-[10px] font-mono text-emerald-400 uppercase ml-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Live Sync Active
+                  </span>
+                )}
               </div>
               <button
                 onClick={onClose}
@@ -267,33 +340,68 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
                 <div className="space-y-6">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-900 pb-4">
                     <div>
-                      <h3 className="font-sans text-xl font-light text-white">Logged Intake Proposals</h3>
-                      <p className="font-sans text-xs text-zinc-500">
-                        Analyzing {applications.length} digital strategic applications saved in cache.
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-sans text-xl font-light text-white">Registered Candidate Applicants</h3>
+                        <span className="px-2 py-0.5 bg-zinc-900 border border-zinc-800 text-emerald-400 font-mono text-xs">
+                          {applications.length} Total
+                        </span>
+                      </div>
+                      <p className="font-sans text-xs text-zinc-500 mt-0.5">
+                        Real-time intake proposals loaded from backend memory bank & sync database.
                       </p>
                     </div>
-                    {applications.length > 0 && (
+                    <div className="flex items-center gap-2">
                       <button
-                        onClick={handleClearAll}
-                        className="px-3 py-1.5 font-mono text-[10px] text-rose-400 border border-rose-950 hover:bg-rose-950/20 transition-all uppercase"
+                        onClick={loadApplications}
+                        disabled={isSyncing}
+                        className="px-3 py-1.5 font-mono text-[10px] text-zinc-300 border border-zinc-800 hover:bg-zinc-900 transition-all uppercase flex items-center gap-1.5 disabled:opacity-50"
                       >
-                        [ Clear All Records ]
+                        <RefreshCw className={`h-3 w-3 ${isSyncing ? 'animate-spin text-emerald-400' : ''}`} />
+                        [ Sync Database ]
                       </button>
-                    )}
+                      {applications.length > 0 && (
+                        <button
+                          onClick={handleClearAll}
+                          className="px-3 py-1.5 font-mono text-[10px] text-rose-400 border border-rose-950 hover:bg-rose-950/20 transition-all uppercase"
+                        >
+                          [ Clear All ]
+                        </button>
+                      )}
+                    </div>
                   </div>
 
-                  {applications.length === 0 ? (
+                  {/* Filter / Search Bar */}
+                  {applications.length > 0 && (
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Filter candidates by name, handle, skills, or proof of work..."
+                        className="w-full bg-zinc-950 border border-zinc-800 p-2 font-mono text-xs text-zinc-200 focus:outline-none focus:border-zinc-600"
+                      />
+                    </div>
+                  )}
+
+                  {filteredApplications.length === 0 ? (
                     <div className="text-center py-16 border border-dashed border-zinc-900 bg-zinc-950/10">
                       <span className="font-mono text-xs text-zinc-600 uppercase block">Zero Transmission Packets Logged</span>
-                      <p className="font-sans text-xs text-zinc-500 mt-1">No applications have been sent or saved locally yet.</p>
+                      <p className="font-sans text-xs text-zinc-500 mt-1">
+                        {searchQuery ? 'No candidates matched your search query.' : 'No applications have been sent or saved yet.'}
+                      </p>
                     </div>
                   ) : (
                     <div className="space-y-6">
-                      {applications.map((app, idx) => (
-                        <div key={idx} className="border border-zinc-850 bg-zinc-950/20 p-5 space-y-4 rounded-none">
+                      {filteredApplications.map((app, idx) => (
+                        <div key={app.id || idx} className="border border-zinc-850 bg-zinc-950/20 p-5 space-y-4 rounded-none">
                           <div className="flex flex-col sm:flex-row justify-between items-start gap-2 border-b border-zinc-900 pb-3">
                             <div>
-                              <h4 className="font-sans text-base font-semibold text-white">{app.name}</h4>
+                              <div className="flex items-center gap-2">
+                                <h4 className="font-sans text-base font-semibold text-white">{app.name}</h4>
+                                <span className="font-mono text-[9px] text-emerald-400 bg-emerald-950/60 border border-emerald-900 px-1.5 py-0.2 uppercase">
+                                  Synced
+                                </span>
+                              </div>
                               <p className="font-mono text-[10px] text-zinc-500 uppercase mt-0.5">
                                 Age: {app.age} | Grade: {app.schoolGrade} | Instagram: <span className="text-emerald-400">{app.instagram}</span>
                               </p>
@@ -336,7 +444,7 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
                                 </div>
                               </div>
                               <div>
-                                <span className="font-mono text-[9px] text-zinc-500 uppercase block">Proof of past work</span>
+                                <span className="font-mono text-[9px] text-zinc-500 uppercase block">Description of Past Work</span>
                                 <p className="text-zinc-300 leading-relaxed whitespace-pre-wrap">{app.proofOfWork}</p>
                               </div>
                             </div>

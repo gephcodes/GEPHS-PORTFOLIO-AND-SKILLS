@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Projects from './components/Projects';
-import Philosophy from './components/Philosophy';
 import Skills from './components/Skills';
 import Footer from './components/Footer';
 import WorkWithMeModal from './components/WorkWithMeModal';
@@ -46,14 +45,11 @@ export default function App() {
         {/* 01 - Products / Assets Grid */}
         <Projects />
 
-        {/* 03 - System Philosophy */}
-        <Philosophy />
-
-        {/* 04 - Core Capabilities Matrix */}
+        {/* 02 - Core Capabilities Matrix */}
         <Skills />
       </main>
 
-      {/* 05 - Contact Form & Social Connects */}
+      {/* 03 - Contact Form & Social Connects */}
       <Footer />
 
       {/* Dynamic Intake Portal Modal */}

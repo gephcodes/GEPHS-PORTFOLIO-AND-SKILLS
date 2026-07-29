@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Check, ArrowRight, Sparkles, AlertCircle, FileText, Compass } from 'lucide-react';
+import Stepper, { Step } from './Stepper';
 
 interface WorkWithMeModalProps {
   isOpen: boolean;
@@ -10,8 +11,8 @@ interface WorkWithMeModalProps {
 type SkillType = 'design' | 'dev' | 'content' | 'sales/outreach' | 'ops/numbers';
 
 export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProps) {
-  // Form step tracking
-  const [activeTab, setActiveTab] = useState<'info' | 'availability' | 'skills' | 'screening' | 'trial'>('info');
+  // Current active step tracking (1 through 5)
+  const [currentStep, setCurrentStep] = useState(1);
   
   // Basic Info State
   const [name, setName] = useState('');
@@ -58,22 +59,8 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
     }
   };
 
-  const handleNextTab = (current: 'info' | 'availability' | 'skills' | 'screening' | 'trial') => {
-    if (current === 'info') setActiveTab('availability');
-    else if (current === 'availability') setActiveTab('skills');
-    else if (current === 'skills') setActiveTab('screening');
-    else if (current === 'screening') setActiveTab('trial');
-  };
-
-  const handlePrevTab = (current: 'info' | 'availability' | 'skills' | 'screening' | 'trial') => {
-    if (current === 'availability') setActiveTab('info');
-    else if (current === 'skills') setActiveTab('availability');
-    else if (current === 'screening') setActiveTab('skills');
-    else if (current === 'trial') setActiveTab('screening');
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     
     // Validate required fields
     if (!name || !age || !schoolGrade || !instagram || !heardFrom || !hoursPerWeek || !freeTimes || selectedSkills.length === 0 || !whyWork || !finishHardThing || !zeroInstructions || !okayWithFixedPay || !keepConfidential || !trialSubmission) {
@@ -123,6 +110,7 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
       localStorage.setItem('geph_work_applications', JSON.stringify(updated));
       setLocalApplications(updated);
       setStatus('success');
+      window.dispatchEvent(new Event('geph_application_submitted'));
     } catch (err) {
       console.error('Error submitting application:', err);
       // Fallback to storing in local storage
@@ -132,6 +120,7 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
         localStorage.setItem('geph_work_applications', JSON.stringify(updated));
         setLocalApplications(updated);
         setStatus('success');
+        window.dispatchEvent(new Event('geph_application_submitted'));
       } catch (err) {
         setStatus('error');
       }
@@ -156,7 +145,7 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
     setKeepConfidential('');
     setTrialSubmission('');
     setStatus('idle');
-    setActiveTab('info');
+    setCurrentStep(1);
   };
 
   // Get current trial task instructions based on first selected skill or general fallback
@@ -236,135 +225,59 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
             </div>
 
             {/* Modal Body Container */}
-            <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col lg:flex-row gap-8">
-              
-              {/* Left Column: Navigation Tracks (Desktop only) */}
-              <div className="hidden lg:flex flex-col gap-2 w-48 shrink-0">
-                <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest block mb-2">Process Stages</span>
-                
-                <button
-                  type="button"
-                  onClick={() => status !== 'success' && setActiveTab('info')}
-                  disabled={status === 'success'}
-                  className={`text-left px-3 py-2 font-mono text-[11px] uppercase border transition-all ${
-                    activeTab === 'info'
-                      ? 'border-white text-white bg-zinc-900/40 font-semibold'
-                      : 'border-transparent text-zinc-500 hover:text-zinc-300'
-                  }`}
+            <div className="flex-1 overflow-y-auto p-6 md:p-8">
+              {status === 'success' ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="space-y-6 text-center py-12 px-4 border border-zinc-800 bg-zinc-950/20 max-w-lg mx-auto"
                 >
-                  01. Basic Info
-                </button>
-                <button
-                  type="button"
-                  onClick={() => status !== 'success' && setActiveTab('availability')}
-                  disabled={status === 'success'}
-                  className={`text-left px-3 py-2 font-mono text-[11px] uppercase border transition-all ${
-                    activeTab === 'availability'
-                      ? 'border-white text-white bg-zinc-900/40 font-semibold'
-                      : 'border-transparent text-zinc-500 hover:text-zinc-300'
-                  }`}
-                >
-                  02. Availability
-                </button>
-                <button
-                  type="button"
-                  onClick={() => status !== 'success' && setActiveTab('skills')}
-                  disabled={status === 'success'}
-                  className={`text-left px-3 py-2 font-mono text-[11px] uppercase border transition-all ${
-                    activeTab === 'skills'
-                      ? 'border-white text-white bg-zinc-900/40 font-semibold'
-                      : 'border-transparent text-zinc-500 hover:text-zinc-300'
-                  }`}
-                >
-                  03. Skills
-                </button>
-                <button
-                  type="button"
-                  onClick={() => status !== 'success' && setActiveTab('screening')}
-                  disabled={status === 'success'}
-                  className={`text-left px-3 py-2 font-mono text-[11px] uppercase border transition-all ${
-                    activeTab === 'screening'
-                      ? 'border-white text-white bg-zinc-900/40 font-semibold'
-                      : 'border-transparent text-zinc-500 hover:text-zinc-300'
-                  }`}
-                >
-                  04. Screening
-                </button>
-                <button
-                  type="button"
-                  onClick={() => status !== 'success' && setActiveTab('trial')}
-                  disabled={status === 'success'}
-                  className={`text-left px-3 py-2 font-mono text-[11px] uppercase border transition-all ${
-                    activeTab === 'trial'
-                      ? 'border-white text-white bg-zinc-900/40 font-semibold'
-                      : 'border-transparent text-zinc-500 hover:text-zinc-300'
-                  }`}
-                >
-                  05. Trial Task
-                </button>
-
-                {localApplications.length > 0 && (
-                  <div className="mt-auto pt-6 border-t border-zinc-900">
-                    <span className="font-mono text-[9px] text-zinc-600 uppercase block mb-1">Local Logs</span>
-                    <span className="font-mono text-[10px] text-zinc-400">
-                      {localApplications.length} Submission{localApplications.length > 1 ? 's' : ''} logged.
-                    </span>
+                  <div className="h-12 w-12 rounded-none border border-emerald-500 bg-emerald-950/20 text-emerald-400 flex items-center justify-center mx-auto">
+                    <Check className="h-6 w-6" />
                   </div>
-                )}
-              </div>
+                  <div className="space-y-2">
+                    <h3 className="font-sans text-xl font-light text-white">Transmission Secured</h3>
+                    <p className="font-sans text-xs text-zinc-400 leading-relaxed">
+                      Your strategic partner questionnaire has been successfully formatted and logged to our local storage database cache.
+                    </p>
+                  </div>
 
-              {/* Right Column: Form Fields */}
-              <div className="flex-1">
-                {status === 'success' ? (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="space-y-6 text-center py-12 px-4 border border-zinc-800 bg-zinc-950/20 max-w-lg mx-auto"
+                  <div className="border-t border-b border-zinc-900 py-3 font-mono text-[11px] text-emerald-400">
+                    <span>Geph will get back as soon as possible.</span>
+                  </div>
+
+                  <div className="flex gap-4 justify-center">
+                    <button
+                      onClick={resetForm}
+                      className="px-4 py-2 font-mono text-xs border border-zinc-800 hover:border-zinc-500 transition-colors text-white"
+                    >
+                      [ Submit Another ]
+                    </button>
+                    <button
+                      onClick={onClose}
+                      className="px-4 py-2 font-mono text-xs bg-white text-black font-semibold hover:bg-zinc-200 transition-colors"
+                    >
+                      [ Finish ]
+                    </button>
+                  </div>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Integrated React Bits Stepper Component */}
+                  <Stepper
+                    initialStep={currentStep}
+                    onStepChange={(step) => setCurrentStep(step)}
+                    onFinalStepCompleted={() => handleSubmit()}
+                    backButtonText="[ Previous Step ]"
+                    nextButtonText="[ Next Step ]"
                   >
-                    <div className="h-12 w-12 rounded-none border border-emerald-500 bg-emerald-950/20 text-emerald-400 flex items-center justify-center mx-auto">
-                      <Check className="h-6 w-6" />
-                    </div>
-                    <div className="space-y-2">
-                      <h3 className="font-sans text-xl font-light text-white">Transmission Secured</h3>
-                      <p className="font-sans text-xs text-zinc-400 leading-relaxed">
-                        Your strategic partner questionnaire has been successfully formatted and logged to our local storage database cache.
-                      </p>
-                    </div>
-
-                    <div className="border-t border-b border-zinc-900 py-3 font-mono text-[11px] text-emerald-400">
-                      <span>Geph will get back as soon as possible.</span>
-                    </div>
-
-                    <div className="flex gap-4 justify-center">
-                      <button
-                        onClick={resetForm}
-                        className="px-4 py-2 font-mono text-xs border border-zinc-800 hover:border-zinc-500 transition-colors text-white"
-                      >
-                        [ Submit Another ]
-                      </button>
-                      <button
-                        onClick={onClose}
-                        className="px-4 py-2 font-mono text-xs bg-white text-black font-semibold hover:bg-zinc-200 transition-colors"
-                      >
-                        [ Finish ]
-                      </button>
-                    </div>
-                  </motion.div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    
                     {/* STEP 1: BASIC INFO */}
-                    {activeTab === 'info' && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.15 }}
-                        className="space-y-4"
-                      >
+                    <Step>
+                      <div className="space-y-4 py-2">
                         <div>
                           <div className="flex justify-between items-center">
                             <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block mb-1">Section 01</span>
-                            <span className="font-mono text-[10px] text-zinc-500 lg:hidden">[ 1 / 5 ]</span>
+                            <span className="font-mono text-[10px] text-zinc-500">[ 1 / 5 ]</span>
                           </div>
                           <h3 className="font-sans text-lg font-light text-white">Basic Identification</h3>
                           <p className="font-sans text-xs text-zinc-400">Let me know who is initiating contact.</p>
@@ -434,32 +347,16 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                             />
                           </div>
                         </div>
-
-                        <div className="pt-4 flex justify-end">
-                          <button
-                            type="button"
-                            onClick={() => handleNextTab('info')}
-                            className="group flex items-center gap-1.5 bg-white px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-black hover:bg-zinc-200 transition-colors"
-                          >
-                            <span>Next: Availability</span>
-                            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
+                      </div>
+                    </Step>
 
                     {/* STEP 2: AVAILABILITY */}
-                    {activeTab === 'availability' && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.15 }}
-                        className="space-y-4"
-                      >
+                    <Step>
+                      <div className="space-y-4 py-2">
                         <div>
                           <div className="flex justify-between items-center">
                             <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block mb-1">Section 02</span>
-                            <span className="font-mono text-[10px] text-zinc-500 lg:hidden">[ 2 / 5 ]</span>
+                            <span className="font-mono text-[10px] text-zinc-500">[ 2 / 5 ]</span>
                           </div>
                           <h3 className="font-sans text-lg font-light text-white">Resource & Time Allocation</h3>
                           <p className="font-sans text-xs text-zinc-400">Be extremely realistic with your schedule commitments.</p>
@@ -501,39 +398,16 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                             />
                           </div>
                         </div>
-
-                        <div className="pt-4 flex justify-between">
-                          <button
-                            type="button"
-                            onClick={() => handlePrevTab('availability')}
-                            className="px-4 py-2 font-mono text-xs border border-zinc-800 hover:border-zinc-500 transition-colors text-zinc-400 hover:text-white"
-                          >
-                            [ Back ]
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => handleNextTab('availability')}
-                            className="group flex items-center gap-1.5 bg-white px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-black hover:bg-zinc-200 transition-colors"
-                          >
-                            <span>Next: Skills Matrix</span>
-                            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
+                      </div>
+                    </Step>
 
                     {/* STEP 3: SKILLS MATRIX */}
-                    {activeTab === 'skills' && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.15 }}
-                        className="space-y-4"
-                      >
+                    <Step>
+                      <div className="space-y-4 py-2">
                         <div>
                           <div className="flex justify-between items-center">
                             <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block mb-1">Section 03</span>
-                            <span className="font-mono text-[10px] text-zinc-500 lg:hidden">[ 3 / 5 ]</span>
+                            <span className="font-mono text-[10px] text-zinc-500">[ 3 / 5 ]</span>
                           </div>
                           <h3 className="font-sans text-lg font-light text-white">Skills Matrix & Proof of Competence</h3>
                           <p className="font-sans text-xs text-zinc-400">Select what you can genuinely execute to high standards.</p>
@@ -573,7 +447,7 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                               <span className="font-mono text-[9px] text-zinc-600">Describe your key projects and past experience</span>
                             </div>
                             <textarea
-                              rows={6}
+                              rows={5}
                               required
                               value={proofOfWork}
                               placeholder="Please describe your best personal projects, professional accomplishments, or what you've built in detail..."
@@ -582,46 +456,22 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                             />
                           </div>
                         </div>
-
-                        <div className="pt-4 flex justify-between">
-                          <button
-                            type="button"
-                            onClick={() => handlePrevTab('skills')}
-                            className="px-4 py-2 font-mono text-xs border border-zinc-800 hover:border-zinc-500 transition-colors text-zinc-400 hover:text-white"
-                          >
-                            [ Back ]
-                          </button>
-                          <button
-                            type="button"
-                            disabled={selectedSkills.length === 0}
-                            onClick={() => handleNextTab('skills')}
-                            className="group flex items-center gap-1.5 bg-white px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-black hover:bg-zinc-200 transition-colors disabled:opacity-40 disabled:pointer-events-none"
-                          >
-                            <span>Next: Screening</span>
-                            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
+                      </div>
+                    </Step>
 
                     {/* STEP 4: SCREENING QUESTIONS */}
-                    {activeTab === 'screening' && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.15 }}
-                        className="space-y-4"
-                      >
+                    <Step>
+                      <div className="space-y-4 py-2">
                         <div>
                           <div className="flex justify-between items-center">
                             <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block mb-1">Section 04</span>
-                            <span className="font-mono text-[10px] text-zinc-500 lg:hidden">[ 4 / 5 ]</span>
+                            <span className="font-mono text-[10px] text-zinc-500">[ 4 / 5 ]</span>
                           </div>
                           <h3 className="font-sans text-lg font-light text-white">Algorithmic Screener</h3>
                           <p className="font-sans text-xs text-zinc-400">Strict structural filtering questions.</p>
                         </div>
 
-                        <div className="space-y-4 h-[45vh] overflow-y-auto pr-2">
+                        <div className="space-y-4 max-h-[40vh] overflow-y-auto pr-2">
                           <div className="space-y-1.5">
                             <label className="font-sans text-xs font-medium text-white block">1. Why do you want to work with me, not just "make money"?</label>
                             <textarea
@@ -716,40 +566,16 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                             </div>
                           </div>
                         </div>
-
-                        <div className="pt-4 flex justify-between">
-                          <button
-                            type="button"
-                            onClick={() => handlePrevTab('screening')}
-                            className="px-4 py-2 font-mono text-xs border border-zinc-800 hover:border-zinc-500 transition-colors text-zinc-400 hover:text-white"
-                          >
-                            [ Back ]
-                          </button>
-                          <button
-                            type="button"
-                            disabled={!whyWork || !finishHardThing || !zeroInstructions || !okayWithFixedPay || !keepConfidential}
-                            onClick={() => handleNextTab('screening')}
-                            className="group flex items-center gap-1.5 bg-white px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-black hover:bg-zinc-200 transition-colors disabled:opacity-40 disabled:pointer-events-none"
-                          >
-                            <span>Next: Practical Trial</span>
-                            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
+                      </div>
+                    </Step>
 
                     {/* STEP 5: TRIAL TASK */}
-                    {activeTab === 'trial' && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.15 }}
-                        className="space-y-4"
-                      >
+                    <Step>
+                      <div className="space-y-4 py-2">
                         <div>
                           <div className="flex justify-between items-center">
                             <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block mb-1">Section 05</span>
-                            <span className="font-mono text-[10px] text-zinc-500 lg:hidden">[ 5 / 5 ]</span>
+                            <span className="font-mono text-[10px] text-zinc-500">[ 5 / 5 ]</span>
                           </div>
                           <h3 className="font-sans text-lg font-light text-white">Execution Trial Task</h3>
                           <p className="font-sans text-xs text-rose-400 font-semibold uppercase tracking-wider">
@@ -770,7 +596,7 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                         <div className="space-y-1.5">
                           <label className="font-mono text-[10px] text-zinc-400 uppercase block">Submission Input / Link / Code Draft</label>
                           <textarea
-                            rows={5}
+                            rows={4}
                             required
                             value={trialSubmission}
                             placeholder={trialTask.placeholder}
@@ -786,36 +612,23 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                           </div>
                         )}
 
-                        <div className="pt-4 flex justify-between">
-                          <button
-                            type="button"
-                            onClick={() => handlePrevTab('trial')}
-                            className="px-4 py-2 font-mono text-xs border border-zinc-800 hover:border-zinc-500 transition-colors text-zinc-400 hover:text-white"
-                          >
-                            [ Back ]
-                          </button>
-                          
+                        <div className="pt-2 border-t border-zinc-900 text-center">
                           <button
                             type="submit"
                             disabled={status === 'submitting'}
-                            className="flex items-center justify-center gap-2 bg-white px-6 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-black hover:bg-zinc-200 transition-colors disabled:opacity-50"
+                            className="w-full flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 p-3 font-mono text-xs font-bold uppercase tracking-wider text-black transition-colors disabled:opacity-50 my-2"
                           >
                             {status === 'submitting' ? 'Transmitting application...' : 'Submit Partnership Application'}
                           </button>
-                        </div>
-
-                        <div className="pt-2 border-t border-zinc-900 text-center">
-                          <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">
+                          <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block">
                             Geph will get back as soon as possible
                           </span>
                         </div>
-                      </motion.div>
-                    )}
-
-                  </form>
-                )}
-              </div>
-
+                      </div>
+                    </Step>
+                  </Stepper>
+                </form>
+              )}
             </div>
           </motion.div>
         </div>

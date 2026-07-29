@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Award, Code2, LineChart, Shield, Music, CheckCircle, ChevronDown, Check } from 'lucide-react';
 import { SkillCategory } from '../types';
+import ShapeGrid from './ShapeGrid';
 
 export default function Skills() {
   const [selectedSkill, setSelectedSkill] = useState<{ name: string; details: string } | null>({
@@ -46,8 +47,22 @@ export default function Skills() {
   ];
 
   return (
-    <section id="skills" className="relative border-t border-zinc-800 bg-black px-6 py-24 md:px-12 lg:px-24">
-      <div className="mx-auto max-w-7xl">
+    <section id="skills" className="relative overflow-hidden border-t border-zinc-800 bg-black px-6 py-24 md:px-12 lg:px-24">
+      {/* Background ShapeGrid Component */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <ShapeGrid
+          speed={0.8}
+          squareSize={50}
+          direction="up"
+          borderColor="#27272a"
+          hoverFillColor="#31adb8"
+          shape="hexagon"
+          hoverTrailAmount={6}
+          className="w-full h-full opacity-50"
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl">
         {/* Section Heading */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16">
           <div className="md:col-span-4">

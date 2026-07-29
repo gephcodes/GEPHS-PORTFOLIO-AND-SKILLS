@@ -1,7 +1,7 @@
 import React from 'react';
 import { Terminal, Compass, Cpu } from 'lucide-react';
 import { motion } from 'motion/react';
-import Balatro from './Balatro';
+import ShapeGrid from './ShapeGrid';
 
 interface HeroProps {
   onWorkClick: () => void;
@@ -21,22 +21,20 @@ export default function Hero({ onWorkClick }: HeroProps) {
       id="hero" 
       className="relative flex min-h-screen flex-col justify-between px-6 pt-32 pb-12 md:px-12 lg:px-24 overflow-hidden bg-black"
     >
-      {/* Balatro Fluid Shader Background */}
+      {/* ShapeGrid Background */}
       <div className="absolute inset-0 z-0">
-        <Balatro
-          isRotate={true}
-          spinSpeed={1.5}
-          mouseInteraction={true}
-          pixelFilter={1200}
-          color1="#10b981" // Vibrant lighter emerald green
-          color2="#06b6d4" // Lighter cyan highlight
-          color3="#011a13" // Very deep forest green contrast
-          contrast={4.2}
-          lighting={0.45}
+        <ShapeGrid
+          speed={1.5}
+          squareSize={45}
+          direction="diagonal"
+          borderColor="#31adb8"
+          hoverFillColor="#222222"
+          shape="square"
+          hoverTrailAmount={5}
+          className="w-full h-full opacity-70"
         />
-        {/* Deep, highly legible dark mask that lets the glowing light colors show on the sides/bottom while ensuring perfect text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/55 to-black/95 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(#1c1c1c_1px,transparent_1px)] [background-size:32px_32px] opacity-20 pointer-events-none" />
+        {/* Soft dark vignette gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/90 pointer-events-none" />
       </div>
       
       {/* Top Metadata Row */}
