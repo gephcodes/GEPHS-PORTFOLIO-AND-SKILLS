@@ -28,7 +28,7 @@ export interface FolderProps {
 }
 
 const Folder: React.FC<FolderProps> = ({ color = '#5227FF', size = 1, items = [], className = '', onSelectPaper }) => {
-  const maxItems = 5;
+  const maxItems = 6;
   const papers = items.slice(0, maxItems);
   while (papers.length < maxItems) {
     papers.push(null);
@@ -37,11 +37,12 @@ const Folder: React.FC<FolderProps> = ({ color = '#5227FF', size = 1, items = []
   const [open, setOpen] = useState(false);
 
   const folderBackColor = darkenColor(color, 0.08);
-  const paper1 = darkenColor('#ffffff', 0.16);
-  const paper2 = darkenColor('#ffffff', 0.12);
-  const paper3 = darkenColor('#ffffff', 0.08);
-  const paper4 = darkenColor('#ffffff', 0.04);
-  const paper5 = '#ffffff';
+  const paper1 = darkenColor('#ffffff', 0.20);
+  const paper2 = darkenColor('#ffffff', 0.16);
+  const paper3 = darkenColor('#ffffff', 0.12);
+  const paper4 = darkenColor('#ffffff', 0.08);
+  const paper5 = darkenColor('#ffffff', 0.04);
+  const paper6 = '#ffffff';
 
   const handleClick = () => {
     setOpen(prev => !prev);
@@ -79,14 +80,15 @@ const Folder: React.FC<FolderProps> = ({ color = '#5227FF', size = 1, items = []
     '--paper-2': paper2,
     '--paper-3': paper3,
     '--paper-4': paper4,
-    '--paper-5': paper5
+    '--paper-5': paper5,
+    '--paper-6': paper6
   } as React.CSSProperties;
 
   const folderClassName = `folder ${open ? 'open' : ''}`.trim();
-  const scaleStyle = { transform: `scale(${size})` };
-
+  // Using className for scale instead of inline style so it can be responsive
+  
   return (
-    <div style={scaleStyle} className={className}>
+    <div className={className}>
       <div
         className={folderClassName}
         style={folderStyle}

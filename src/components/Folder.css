@@ -34,47 +34,78 @@
 }
 
 .folder.open .paper:nth-child(1) {
-  transform: translate(-140%, -80%) rotateZ(-18deg);
+  transform: translate(-65%, -50%) rotateZ(-20deg);
+  height: 100%;
 }
 
 .folder.open .paper:nth-child(1):hover {
-  transform: translate(-140%, -80%) rotateZ(-18deg) scale(1.1);
+  transform: translate(-65%, -50%) rotateZ(-20deg) scale(1.15);
+  z-index: 10;
 }
 
 .folder.open .paper:nth-child(2) {
-  transform: translate(-80%, -115%) rotateZ(-9deg);
-  height: 85%;
+  transform: translate(-40%, -80%) rotateZ(-12deg);
+  height: 100%;
 }
 
 .folder.open .paper:nth-child(2):hover {
-  transform: translate(-80%, -115%) rotateZ(-9deg) scale(1.1);
+  transform: translate(-40%, -80%) rotateZ(-12deg) scale(1.15);
+  z-index: 10;
 }
 
 .folder.open .paper:nth-child(3) {
-  transform: translate(-20%, -120%) rotateZ(0deg);
-  height: 85%;
+  transform: translate(-15%, -100%) rotateZ(-4deg);
+  height: 100%;
 }
 
 .folder.open .paper:nth-child(3):hover {
-  transform: translate(-20%, -120%) rotateZ(0deg) scale(1.1);
+  transform: translate(-15%, -100%) rotateZ(-4deg) scale(1.15);
+  z-index: 10;
 }
 
 .folder.open .paper:nth-child(4) {
-  transform: translate(40%, -115%) rotateZ(9deg);
-  height: 85%;
+  transform: translate(15%, -100%) rotateZ(4deg);
+  height: 100%;
 }
 
 .folder.open .paper:nth-child(4):hover {
-  transform: translate(40%, -115%) rotateZ(9deg) scale(1.1);
+  transform: translate(15%, -100%) rotateZ(4deg) scale(1.15);
+  z-index: 10;
 }
 
 .folder.open .paper:nth-child(5) {
-  transform: translate(100%, -80%) rotateZ(18deg);
-  height: 85%;
+  transform: translate(40%, -80%) rotateZ(12deg);
+  height: 100%;
 }
 
 .folder.open .paper:nth-child(5):hover {
-  transform: translate(100%, -80%) rotateZ(18deg) scale(1.1);
+  transform: translate(40%, -80%) rotateZ(12deg) scale(1.15);
+  z-index: 10;
+}
+
+.folder.open .paper:nth-child(6) {
+  transform: translate(65%, -50%) rotateZ(20deg);
+  height: 100%;
+}
+
+.folder.open .paper:nth-child(6):hover {
+  transform: translate(65%, -50%) rotateZ(20deg) scale(1.15);
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .folder.open .paper:nth-child(1) { transform: translate(-160%, -70%) rotateZ(-25deg); }
+  .folder.open .paper:nth-child(1):hover { transform: translate(-160%, -70%) rotateZ(-25deg) scale(1.15); }
+  .folder.open .paper:nth-child(2) { transform: translate(-100%, -100%) rotateZ(-15deg); }
+  .folder.open .paper:nth-child(2):hover { transform: translate(-100%, -100%) rotateZ(-15deg) scale(1.15); }
+  .folder.open .paper:nth-child(3) { transform: translate(-35%, -130%) rotateZ(-5deg); }
+  .folder.open .paper:nth-child(3):hover { transform: translate(-35%, -130%) rotateZ(-5deg) scale(1.15); }
+  .folder.open .paper:nth-child(4) { transform: translate(35%, -130%) rotateZ(5deg); }
+  .folder.open .paper:nth-child(4):hover { transform: translate(35%, -130%) rotateZ(5deg) scale(1.15); }
+  .folder.open .paper:nth-child(5) { transform: translate(100%, -100%) rotateZ(15deg); }
+  .folder.open .paper:nth-child(5):hover { transform: translate(100%, -100%) rotateZ(15deg) scale(1.15); }
+  .folder.open .paper:nth-child(6) { transform: translate(160%, -70%) rotateZ(25deg); }
+  .folder.open .paper:nth-child(6):hover { transform: translate(160%, -70%) rotateZ(25deg) scale(1.15); }
 }
 
 .folder.open .folder__front {
@@ -142,6 +173,12 @@
   background: var(--paper-5);
   width: 96%;
   height: 58%;
+}
+
+.paper:nth-child(6) {
+  background: var(--paper-6);
+  width: 98%;
+  height: 52%;
 }
 
 .folder__front {

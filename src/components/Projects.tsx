@@ -25,6 +25,20 @@ export default function Projects() {
       link: 'https://solvry.onrender.com'
     },
     {
+      id: 'mint',
+      name: 'Mint',
+      tag: 'Hackathon',
+      role: 'lablab.ai natively hackathon',
+      description: 'Built during the lablab.ai natively hackathon (Aug 3 - Aug 10).',
+      detailedDescription: 'Developed during the lablab.ai natively hackathon. A rapid prototype focusing on specific AI implementation constraints.',
+      whyBuilt: 'To compete and build something novel within the time limits of the lablab.ai natively hackathon.',
+      features: [
+        'Built for lablab.ai natively hackathon',
+        'Aug 3 - Aug 10 development timeframe'
+      ],
+      link: 'https://wudaiyu6g4bggf08xyb4l21n.nativelyai.app'
+    },
+    {
       id: 'stupidsimple',
       name: 'StupidSimple.AI',
       tag: 'Live',
@@ -71,20 +85,24 @@ export default function Projects() {
       <span className="font-mono text-[8px] text-zinc-400 font-semibold uppercase tracking-widest mb-0.5">01</span>
       <h4 className="font-bold text-[12px] text-zinc-900 tracking-tight leading-none">Solvry</h4>
     </div>,
-    <div key="p2" className="p-2 h-full flex flex-col items-center justify-center text-center font-sans bg-zinc-50 text-zinc-900 border border-zinc-200 shadow-sm">
+    <div key="pmint" className="p-2 h-full flex flex-col items-center justify-center text-center font-sans bg-zinc-50 text-zinc-900 border border-zinc-200 shadow-sm">
       <span className="font-mono text-[8px] text-zinc-400 font-semibold uppercase tracking-widest mb-0.5">02</span>
+      <h4 className="font-bold text-[12px] text-zinc-900 tracking-tight leading-none">Mint</h4>
+    </div>,
+    <div key="p2" className="p-2 h-full flex flex-col items-center justify-center text-center font-sans bg-white text-zinc-900 border border-zinc-200 shadow-sm">
+      <span className="font-mono text-[8px] text-zinc-400 font-semibold uppercase tracking-widest mb-0.5">03</span>
       <h4 className="font-bold text-[11px] text-zinc-900 tracking-tight leading-none">StupidSimple.AI</h4>
     </div>,
-    <div key="p3" className="p-2 h-full flex flex-col items-center justify-center text-center font-sans bg-white text-zinc-900 border border-zinc-200 shadow-sm">
-      <span className="font-mono text-[8px] text-zinc-400 font-semibold uppercase tracking-widest mb-0.5">03</span>
+    <div key="p3" className="p-2 h-full flex flex-col items-center justify-center text-center font-sans bg-zinc-50 text-zinc-900 border border-zinc-200 shadow-sm">
+      <span className="font-mono text-[8px] text-zinc-400 font-semibold uppercase tracking-widest mb-0.5">04</span>
       <h4 className="font-bold text-[12px] text-zinc-900 tracking-tight leading-none">GoalHub</h4>
     </div>,
-    <div key="p4" className="p-2 h-full flex flex-col items-center justify-center text-center font-sans bg-zinc-50 text-zinc-900 border border-zinc-200 shadow-sm">
-      <span className="font-mono text-[8px] text-zinc-400 font-semibold uppercase tracking-widest mb-0.5">04</span>
+    <div key="p4" className="p-2 h-full flex flex-col items-center justify-center text-center font-sans bg-white text-zinc-900 border border-zinc-200 shadow-sm">
+      <span className="font-mono text-[8px] text-zinc-400 font-semibold uppercase tracking-widest mb-0.5">05</span>
       <h4 className="font-bold text-[11px] text-zinc-900 tracking-tight leading-none">Scent Preview</h4>
     </div>,
-    <div key="p5" className="p-2 h-full flex flex-col items-center justify-center text-center font-sans bg-white text-zinc-900 border border-zinc-200 shadow-sm">
-      <span className="font-mono text-[8px] text-zinc-400 font-semibold uppercase tracking-widest mb-0.5">05</span>
+    <div key="p5" className="p-2 h-full flex flex-col items-center justify-center text-center font-sans bg-zinc-50 text-zinc-900 border border-zinc-200 shadow-sm">
+      <span className="font-mono text-[8px] text-zinc-400 font-semibold uppercase tracking-widest mb-0.5">06</span>
       <h4 className="font-bold text-[12px] text-zinc-900 tracking-tight leading-none">Pulse</h4>
     </div>
   ];
@@ -146,10 +164,10 @@ export default function Projects() {
             </p>
           </div>
 
-          <div className="flex items-center justify-center min-h-[140px] px-8 py-4">
+          <div className="flex items-center justify-center min-h-[320px] w-full lg:w-1/2 px-2 sm:px-4 py-10 overflow-visible">
             <Folder
               color="#e4e4e7"
-              size={1.3}
+              className="transform scale-75 sm:scale-90 lg:scale-100"
               items={folderItems}
               onSelectPaper={(index) => {
                 if (projects[index]) {
