@@ -11,7 +11,7 @@ export default function Projects() {
     {
       id: 'solvry',
       name: 'Solvry',
-      tag: 'Building',
+      tag: 'Beta',
       role: 'Founder / CEO',
       description: 'Anonymous peer support app for teens 13-19. You post anonymously and connect safely with peers going through the same thing.',
       detailedDescription: 'Built out of personal loss to combat teen isolation. Solvry gives teens facing grief, academic stress, rejection, or family struggles a safe, moderated space to post and connect.',
@@ -22,7 +22,7 @@ export default function Projects() {
         'Talk & heal; crisis keywords auto-display helplines',
         'Safe architecture: no DMs, daily moderation, toxic content blocked'
       ],
-      link: 'https://solvry.onrender.com'
+      link: 'https://solvry-repo-production.up.railway.app'
     },
     {
       id: 'mint',
