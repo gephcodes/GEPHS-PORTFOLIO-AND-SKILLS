@@ -22,7 +22,7 @@ export default function Projects() {
         'Talk & heal; crisis keywords auto-display helplines',
         'Safe architecture: no DMs, daily moderation, toxic content blocked'
       ],
-      link: 'https://solvry-repo-production.up.railway.app'
+      link: 'https://solvry.onrender.com'
     },
     {
       id: 'mint',
