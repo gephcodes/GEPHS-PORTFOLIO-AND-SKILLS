@@ -196,7 +196,7 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#FDFBF7]/80 backdrop-blur-md p-4 overflow-y-auto">
           {/* Backdrop Closer */}
           <div className="absolute inset-0 cursor-crosshair" onClick={onClose} />
 
@@ -205,20 +205,20 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ type: 'spring', stiffness: 500, damping: 32 }}
-            className="relative z-10 w-full max-w-4xl border border-zinc-850 bg-black shadow-2xl rounded-none flex flex-col max-h-[95vh] sm:max-h-[90vh]"
+            className="relative z-10 w-full max-w-4xl border border-zinc-850 bg-[#FDFBF7] shadow-2xl rounded-none flex flex-col max-h-[95vh] sm:max-h-[90vh]"
             id="work-with-me-modal"
           >
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-zinc-850 px-6 py-4 shrink-0 bg-zinc-950">
+            <div className="flex items-center justify-between border-b border-zinc-850 px-6 py-4 shrink-0 bg-white">
               <div className="flex items-center gap-2">
-                <Compass className="h-4 w-4 text-white" />
-                <span className="font-mono text-xs text-white uppercase tracking-wider">
+                <Compass className="h-4 w-4 text-black" />
+                <span className="font-mono text-xs text-black uppercase tracking-wider">
                   Partner Intake Matrix / Work with Geph
                 </span>
               </div>
               <button
                 onClick={onClose}
-                className="font-mono text-xs uppercase text-zinc-500 hover:text-white transition-colors flex items-center gap-1"
+                className="font-mono text-xs uppercase text-black hover:text-black transition-colors flex items-center gap-1"
               >
                 [ ESC ] <X className="h-4 w-4 inline" />
               </button>
@@ -230,26 +230,26 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="space-y-6 text-center py-12 px-4 border border-zinc-800 bg-zinc-950/20 max-w-lg mx-auto"
+                  className="space-y-6 text-center py-12 px-4 border border-zinc-200 bg-white/20 max-w-lg mx-auto"
                 >
-                  <div className="h-12 w-12 rounded-none border border-emerald-500 bg-emerald-950/20 text-emerald-400 flex items-center justify-center mx-auto">
+                  <div className="h-12 w-12 rounded-none border border-emerald-500 bg-emerald-950/20 text-black flex items-center justify-center mx-auto">
                     <Check className="h-6 w-6" />
                   </div>
                   <div className="space-y-2">
-                    <h3 className="font-sans text-xl font-light text-white">Transmission Secured</h3>
-                    <p className="font-sans text-xs text-zinc-400 leading-relaxed">
+                    <h3 className="font-sans text-xl font-light text-black">Transmission Secured</h3>
+                    <p className="font-sans text-xs text-black leading-relaxed">
                       Your strategic partner questionnaire has been successfully formatted and logged to our local storage database cache.
                     </p>
                   </div>
 
-                  <div className="border-t border-b border-zinc-900 py-3 font-mono text-[11px] text-emerald-400">
+                  <div className="border-t border-b border-zinc-900 py-3 font-mono text-[11px] text-black">
                     <span>Geph will get back as soon as possible.</span>
                   </div>
 
                   <div className="flex gap-4 justify-center">
                     <button
                       onClick={resetForm}
-                      className="px-4 py-2 font-mono text-xs border border-zinc-800 hover:border-zinc-500 transition-colors text-white"
+                      className="px-4 py-2 font-mono text-xs border border-zinc-200 hover:border-zinc-500 transition-colors text-black"
                     >
                       [ Submit Another ]
                     </button>
@@ -276,47 +276,47 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                       <div className="space-y-4 py-2">
                         <div>
                           <div className="flex justify-between items-center">
-                            <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block mb-1">Section 01</span>
-                            <span className="font-mono text-[10px] text-zinc-500">[ 1 / 5 ]</span>
+                            <span className="font-mono text-[10px] text-black uppercase tracking-widest block mb-1">Section 01</span>
+                            <span className="font-mono text-[10px] text-black">[ 1 / 5 ]</span>
                           </div>
-                          <h3 className="font-sans text-lg font-light text-white">Basic Identification</h3>
-                          <p className="font-sans text-xs text-zinc-400">Let me know who is initiating contact.</p>
+                          <h3 className="font-sans text-lg font-light text-black">Basic Identification</h3>
+                          <p className="font-sans text-xs text-black">Let me know who is initiating contact.</p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="space-y-1.5">
-                            <label className="font-mono text-[10px] text-zinc-400 uppercase block">Full Name</label>
+                            <label className="font-mono text-[10px] text-black uppercase block">Full Name</label>
                             <input
                               type="text"
                               required
                               value={name}
                               placeholder="e.g. Liam Sterling"
                               onChange={(e) => setName(e.target.value)}
-                              className="w-full rounded-none border border-zinc-800 bg-black p-3 font-sans text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                              className="w-full rounded-none border border-zinc-200 bg-[#FDFBF7] p-3 font-sans text-xs text-black focus:border-zinc-500 focus:outline-none transition-colors"
                             />
                           </div>
 
                           <div className="grid grid-cols-2 gap-2">
                             <div className="space-y-1.5">
-                              <label className="font-mono text-[10px] text-zinc-400 uppercase block">Age</label>
+                              <label className="font-mono text-[10px] text-black uppercase block">Age</label>
                               <input
                                 type="number"
                                 required
                                 value={age}
                                 placeholder="e.g. 19"
                                 onChange={(e) => setAge(e.target.value)}
-                                className="w-full rounded-none border border-zinc-800 bg-black p-3 font-sans text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                                className="w-full rounded-none border border-zinc-200 bg-[#FDFBF7] p-3 font-sans text-xs text-black focus:border-zinc-500 focus:outline-none transition-colors"
                               />
                             </div>
                             <div className="space-y-1.5">
-                              <label className="font-mono text-[10px] text-zinc-400 uppercase block">School / Grade</label>
+                              <label className="font-mono text-[10px] text-black uppercase block">School / Grade</label>
                               <input
                                 type="text"
                                 required
                                 value={schoolGrade}
                                 placeholder="e.g. College Yr 2"
                                 onChange={(e) => setSchoolGrade(e.target.value)}
-                                className="w-full rounded-none border border-zinc-800 bg-black p-3 font-sans text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                                className="w-full rounded-none border border-zinc-200 bg-[#FDFBF7] p-3 font-sans text-xs text-black focus:border-zinc-500 focus:outline-none transition-colors"
                               />
                             </div>
                           </div>
@@ -324,26 +324,26 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="space-y-1.5">
-                            <label className="font-mono text-[10px] text-zinc-400 uppercase block">Instagram Handle</label>
+                            <label className="font-mono text-[10px] text-black uppercase block">Instagram Handle</label>
                             <input
                               type="text"
                               required
                               value={instagram}
                               placeholder="e.g. @liam.shiptt"
                               onChange={(e) => setInstagram(e.target.value)}
-                              className="w-full rounded-none border border-zinc-800 bg-black p-3 font-sans text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                              className="w-full rounded-none border border-zinc-200 bg-[#FDFBF7] p-3 font-sans text-xs text-black focus:border-zinc-500 focus:outline-none transition-colors"
                             />
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="font-mono text-[10px] text-zinc-400 uppercase block">How did you hear about Geph?</label>
+                            <label className="font-mono text-[10px] text-black uppercase block">How did you hear about Geph?</label>
                             <input
                               type="text"
                               required
                               value={heardFrom}
                               placeholder="e.g. Twitter / GitHub / Mutual friend"
                               onChange={(e) => setHeardFrom(e.target.value)}
-                              className="w-full rounded-none border border-zinc-800 bg-black p-3 font-sans text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                              className="w-full rounded-none border border-zinc-200 bg-[#FDFBF7] p-3 font-sans text-xs text-black focus:border-zinc-500 focus:outline-none transition-colors"
                             />
                           </div>
                         </div>
@@ -355,46 +355,46 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                       <div className="space-y-4 py-2">
                         <div>
                           <div className="flex justify-between items-center">
-                            <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block mb-1">Section 02</span>
-                            <span className="font-mono text-[10px] text-zinc-500">[ 2 / 5 ]</span>
+                            <span className="font-mono text-[10px] text-black uppercase tracking-widest block mb-1">Section 02</span>
+                            <span className="font-mono text-[10px] text-black">[ 2 / 5 ]</span>
                           </div>
-                          <h3 className="font-sans text-lg font-light text-white">Resource & Time Allocation</h3>
-                          <p className="font-sans text-xs text-zinc-400">Be extremely realistic with your schedule commitments.</p>
+                          <h3 className="font-sans text-lg font-light text-black">Resource & Time Allocation</h3>
+                          <p className="font-sans text-xs text-black">Be extremely realistic with your schedule commitments.</p>
                         </div>
 
                         <div className="space-y-4">
                           <div className="space-y-1.5">
-                            <label className="font-mono text-[10px] text-zinc-400 uppercase block">Hours per week you can commit</label>
+                            <label className="font-mono text-[10px] text-black uppercase block">Hours per week you can commit</label>
                             <input
                               type="number"
                               required
                               value={hoursPerWeek}
                               placeholder="e.g. 15 (Minimum recommended: 10)"
                               onChange={(e) => setHoursPerWeek(e.target.value)}
-                              className="w-full rounded-none border border-zinc-800 bg-black p-3 font-sans text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                              className="w-full rounded-none border border-zinc-200 bg-[#FDFBF7] p-3 font-sans text-xs text-black focus:border-zinc-500 focus:outline-none transition-colors"
                             />
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="font-mono text-[10px] text-zinc-400 uppercase block">Usual Free Days & Timeframes</label>
+                            <label className="font-mono text-[10px] text-black uppercase block">Usual Free Days & Timeframes</label>
                             <input
                               type="text"
                               required
                               value={freeTimes}
                               placeholder="e.g. Mon-Fri evenings, Saturday afternoons"
                               onChange={(e) => setFreeTimes(e.target.value)}
-                              className="w-full rounded-none border border-zinc-800 bg-black p-3 font-sans text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                              className="w-full rounded-none border border-zinc-200 bg-[#FDFBF7] p-3 font-sans text-xs text-black focus:border-zinc-500 focus:outline-none transition-colors"
                             />
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="font-mono text-[10px] text-zinc-400 uppercase block">Recurring Conflicts / Obligations (Optional)</label>
+                            <label className="font-mono text-[10px] text-black uppercase block">Recurring Conflicts / Obligations (Optional)</label>
                             <textarea
                               rows={2}
                               value={conflicts}
                               placeholder="e.g. Sports practice Tue/Thu 4-6 PM, tuition prep on Sundays"
                               onChange={(e) => setConflicts(e.target.value)}
-                              className="w-full rounded-none border border-zinc-800 bg-black p-3 font-sans text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                              className="w-full rounded-none border border-zinc-200 bg-[#FDFBF7] p-3 font-sans text-xs text-black focus:border-zinc-500 focus:outline-none transition-colors"
                             />
                           </div>
                         </div>
@@ -406,16 +406,16 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                       <div className="space-y-4 py-2">
                         <div>
                           <div className="flex justify-between items-center">
-                            <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block mb-1">Section 03</span>
-                            <span className="font-mono text-[10px] text-zinc-500">[ 3 / 5 ]</span>
+                            <span className="font-mono text-[10px] text-black uppercase tracking-widest block mb-1">Section 03</span>
+                            <span className="font-mono text-[10px] text-black">[ 3 / 5 ]</span>
                           </div>
-                          <h3 className="font-sans text-lg font-light text-white">Skills Matrix & Proof of Competence</h3>
-                          <p className="font-sans text-xs text-zinc-400">Select what you can genuinely execute to high standards.</p>
+                          <h3 className="font-sans text-lg font-light text-black">Skills Matrix & Proof of Competence</h3>
+                          <p className="font-sans text-xs text-black">Select what you can genuinely execute to high standards.</p>
                         </div>
 
                         <div className="space-y-4">
                           <div className="space-y-2">
-                            <label className="font-mono text-[10px] text-zinc-400 uppercase block mb-1">Select your specialties (Pick at least one):</label>
+                            <label className="font-mono text-[10px] text-black uppercase block mb-1">Select your specialties (Pick at least one):</label>
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
                               {([
                                 { key: 'design', label: 'Design' },
@@ -431,7 +431,7 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                                   className={`rounded-none border p-3 font-mono text-[10px] uppercase text-center tracking-wider transition-all ${
                                     selectedSkills.includes(skill.key as SkillType)
                                       ? 'bg-white border-white text-black font-semibold'
-                                      : 'border-zinc-800 text-zinc-400 hover:border-zinc-700'
+                                      : 'border-zinc-200 text-black hover:border-zinc-700'
                                   }`}
                                 >
                                   {selectedSkills.includes(skill.key as SkillType) && <Check className="h-3 w-3 inline mr-1 text-black shrink-0" />}
@@ -443,8 +443,8 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
 
                           <div className="space-y-1.5">
                             <div className="flex justify-between items-center">
-                              <label className="font-mono text-[10px] text-zinc-400 uppercase block">Description of Past Work</label>
-                              <span className="font-mono text-[9px] text-zinc-600">Describe your key projects and past experience</span>
+                              <label className="font-mono text-[10px] text-black uppercase block">Description of Past Work</label>
+                              <span className="font-mono text-[9px] text-black">Describe your key projects and past experience</span>
                             </div>
                             <textarea
                               rows={5}
@@ -452,7 +452,7 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                               value={proofOfWork}
                               placeholder="Please describe your best personal projects, professional accomplishments, or what you've built in detail..."
                               onChange={(e) => setProofOfWork(e.target.value)}
-                              className="w-full rounded-none border border-zinc-800 bg-black p-3 font-sans text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                              className="w-full rounded-none border border-zinc-200 bg-[#FDFBF7] p-3 font-sans text-xs text-black focus:border-zinc-500 focus:outline-none transition-colors"
                             />
                           </div>
                         </div>
@@ -464,53 +464,53 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                       <div className="space-y-4 py-2">
                         <div>
                           <div className="flex justify-between items-center">
-                            <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block mb-1">Section 04</span>
-                            <span className="font-mono text-[10px] text-zinc-500">[ 4 / 5 ]</span>
+                            <span className="font-mono text-[10px] text-black uppercase tracking-widest block mb-1">Section 04</span>
+                            <span className="font-mono text-[10px] text-black">[ 4 / 5 ]</span>
                           </div>
-                          <h3 className="font-sans text-lg font-light text-white">Algorithmic Screener</h3>
-                          <p className="font-sans text-xs text-zinc-400">Strict structural filtering questions.</p>
+                          <h3 className="font-sans text-lg font-light text-black">Algorithmic Screener</h3>
+                          <p className="font-sans text-xs text-black">Strict structural filtering questions.</p>
                         </div>
 
                         <div className="space-y-4 max-h-[40vh] overflow-y-auto pr-2">
                           <div className="space-y-1.5">
-                            <label className="font-sans text-xs font-medium text-white block">1. Why do you want to work with me, not just "make money"?</label>
+                            <label className="font-sans text-xs font-medium text-black block">1. Why do you want to work with me, not just "make money"?</label>
                             <textarea
                               rows={2.5}
                               required
                               value={whyWork}
                               placeholder="Give me an organic reason showing you understand what we are building."
                               onChange={(e) => setWhyWork(e.target.value)}
-                              className="w-full rounded-none border border-zinc-800 bg-black p-3 font-sans text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                              className="w-full rounded-none border border-zinc-200 bg-[#FDFBF7] p-3 font-sans text-xs text-black focus:border-zinc-500 focus:outline-none transition-colors"
                             />
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="font-sans text-xs font-medium text-white block">2. Describe a time you finished something hard without anyone pushing you.</label>
+                            <label className="font-sans text-xs font-medium text-black block">2. Describe a time you finished something hard without anyone pushing you.</label>
                             <textarea
                               rows={2.5}
                               required
                               value={finishHardThing}
                               placeholder="Show initiative. It could be learning an instrument, shipping a site, mastering a setup."
                               onChange={(e) => setFinishHardThing(e.target.value)}
-                              className="w-full rounded-none border border-zinc-800 bg-black p-3 font-sans text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                              className="w-full rounded-none border border-zinc-200 bg-[#FDFBF7] p-3 font-sans text-xs text-black focus:border-zinc-500 focus:outline-none transition-colors"
                             />
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="font-sans text-xs font-medium text-white block">3. If I gave you a task with zero instructions, what's the first thing you'd do?</label>
+                            <label className="font-sans text-xs font-medium text-black block">3. If I gave you a task with zero instructions, what's the first thing you'd do?</label>
                             <textarea
                               rows={2.5}
                               required
                               value={zeroInstructions}
                               placeholder="Walk me through your logical triage procedure."
                               onChange={(e) => setZeroInstructions(e.target.value)}
-                              className="w-full rounded-none border border-zinc-800 bg-black p-3 font-sans text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                              className="w-full rounded-none border border-zinc-200 bg-[#FDFBF7] p-3 font-sans text-xs text-black focus:border-zinc-500 focus:outline-none transition-colors"
                             />
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                            <div className="space-y-1.5 border border-zinc-800 p-3 bg-zinc-950/20">
-                              <label className="font-sans text-xs font-semibold text-white block">Are you okay with pay/revenue split being fixed and non-negotiable?</label>
+                            <div className="space-y-1.5 border border-zinc-200 p-3 bg-white/20">
+                              <label className="font-sans text-xs font-semibold text-black block">Are you okay with pay/revenue split being fixed and non-negotiable?</label>
                               <div className="flex gap-4 mt-2">
                                 <label className="flex items-center gap-2 cursor-pointer text-xs">
                                   <input
@@ -537,8 +537,8 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                               </div>
                             </div>
 
-                            <div className="space-y-1.5 border border-zinc-800 p-3 bg-zinc-950/20">
-                              <label className="font-sans text-xs font-semibold text-white block">Can you keep internal info confidential, even from friends?</label>
+                            <div className="space-y-1.5 border border-zinc-200 p-3 bg-white/20">
+                              <label className="font-sans text-xs font-semibold text-black block">Can you keep internal info confidential, even from friends?</label>
                               <div className="flex gap-4 mt-2">
                                 <label className="flex items-center gap-2 cursor-pointer text-xs">
                                   <input
@@ -574,34 +574,34 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                       <div className="space-y-4 py-2">
                         <div>
                           <div className="flex justify-between items-center">
-                            <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block mb-1">Section 05</span>
-                            <span className="font-mono text-[10px] text-zinc-500">[ 5 / 5 ]</span>
+                            <span className="font-mono text-[10px] text-black uppercase tracking-widest block mb-1">Section 05</span>
+                            <span className="font-mono text-[10px] text-black">[ 5 / 5 ]</span>
                           </div>
-                          <h3 className="font-sans text-lg font-light text-white">Execution Trial Task</h3>
+                          <h3 className="font-sans text-lg font-light text-black">Execution Trial Task</h3>
                           <p className="font-sans text-xs text-rose-400 font-semibold uppercase tracking-wider">
                             ★ This matters more than the interview answers
                           </p>
                         </div>
 
-                        <div className="border border-zinc-800 bg-zinc-950/40 p-4 space-y-3">
-                          <div className="flex items-center gap-2 font-mono text-xs text-white uppercase font-bold">
-                            <FileText className="h-4 w-4 text-white shrink-0" />
+                        <div className="border border-zinc-200 bg-white/40 p-4 space-y-3">
+                          <div className="flex items-center gap-2 font-mono text-xs text-black uppercase font-bold">
+                            <FileText className="h-4 w-4 text-black shrink-0" />
                             <span>{trialTask.title}</span>
                           </div>
-                          <p className="font-sans text-xs text-zinc-300 leading-relaxed">
+                          <p className="font-sans text-xs text-black leading-relaxed">
                             {trialTask.instructions}
                           </p>
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="font-mono text-[10px] text-zinc-400 uppercase block">Submission Input / Link / Code Draft</label>
+                          <label className="font-mono text-[10px] text-black uppercase block">Submission Input / Link / Code Draft</label>
                           <textarea
                             rows={4}
                             required
                             value={trialSubmission}
                             placeholder={trialTask.placeholder}
                             onChange={(e) => setTrialSubmission(e.target.value)}
-                            className="w-full rounded-none border border-zinc-800 bg-black p-3 font-mono text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                            className="w-full rounded-none border border-zinc-200 bg-[#FDFBF7] p-3 font-mono text-xs text-black focus:border-zinc-500 focus:outline-none transition-colors"
                           />
                         </div>
 
@@ -620,7 +620,7 @@ export default function WorkWithMeModal({ isOpen, onClose }: WorkWithMeModalProp
                           >
                             {status === 'submitting' ? 'Transmitting application...' : 'Submit Partnership Application'}
                           </button>
-                          <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block">
+                          <span className="font-mono text-[10px] text-black uppercase tracking-widest block">
                             Geph will get back as soon as possible
                           </span>
                         </div>

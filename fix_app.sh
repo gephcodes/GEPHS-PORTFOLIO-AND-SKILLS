@@ -1,3 +1,4 @@
+cat << 'INNER_EOF' > src/App.tsx
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -7,7 +8,6 @@ import Navbar from './components/Navbar';
 import NeuralTunnel from './components/ui/neural-tunnel';
 import Hero from './components/Hero';
 import Projects from './components/Projects';
-import Certificates from './components/Certificates';
 import Footer from './components/Footer';
 import WorkWithMeModal from './components/WorkWithMeModal';
 import AdminModal from './components/AdminModal';
@@ -31,7 +31,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#FDFBF7] font-sans text-black antialiased selection:bg-[#003BFF] selection:text-black relative">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <NeuralTunnel className="w-full h-full opacity-100" glowColor="#003BFF" />
+        <NeuralTunnel className="w-full h-full opacity-70" glowColor="#003BFF" />
       </div>
       <div className="relative z-10">
         <Navbar 
@@ -42,7 +42,6 @@ export default function App() {
         <main>
           <Hero onWorkClick={() => setIsWorkModalOpen(true)} />
           <Projects />
-          <Certificates />
         </main>
         <Footer />
         <WorkWithMeModal 
@@ -57,3 +56,4 @@ export default function App() {
     </div>
   );
 }
+INNER_EOF

@@ -247,7 +247,7 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#FDFBF7]/90 backdrop-blur-md p-4 overflow-y-auto">
           {/* Backdrop closer */}
           <div className="absolute inset-0 cursor-crosshair" onClick={onClose} />
 
@@ -256,18 +256,18 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ type: 'spring', stiffness: 500, damping: 32 }}
-            className="relative z-10 w-full max-w-4xl border border-zinc-800 bg-black shadow-2xl rounded-none flex flex-col max-h-[95vh] sm:max-h-[90vh]"
+            className="relative z-10 w-full max-w-4xl border border-zinc-200 bg-[#FDFBF7] shadow-2xl rounded-none flex flex-col max-h-[95vh] sm:max-h-[90vh]"
             id="admin-matrix-portal"
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-zinc-800 px-6 py-4 bg-zinc-950 shrink-0">
+            <div className="flex items-center justify-between border-b border-zinc-200 px-6 py-4 bg-white shrink-0">
               <div className="flex items-center gap-2">
-                <Lock className="h-4 w-4 text-emerald-400" />
-                <span className="font-mono text-xs text-white uppercase tracking-wider">
+                <Lock className="h-4 w-4 text-black" />
+                <span className="font-mono text-xs text-black uppercase tracking-wider">
                   Intel Core Access Panel / Secure Admin Interface
                 </span>
                 {isAuthenticated && (
-                  <span className="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 bg-emerald-950/60 border border-emerald-800 text-[10px] font-mono text-emerald-400 uppercase ml-2">
+                  <span className="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 bg-emerald-950/60 border border-emerald-800 text-[10px] font-mono text-black uppercase ml-2">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     Live Sync Active
                   </span>
@@ -275,7 +275,7 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
               </div>
               <button
                 onClick={onClose}
-                className="font-mono text-xs uppercase text-zinc-500 hover:text-white transition-colors flex items-center gap-1"
+                className="font-mono text-xs uppercase text-black hover:text-black transition-colors flex items-center gap-1"
               >
                 [ Close ] <X className="h-4 w-4 inline" />
               </button>
@@ -287,14 +287,14 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
                 /* LOGIN SCREEN */
                 <div className="max-w-md mx-auto py-12 space-y-6">
                   <div className="text-center space-y-2">
-                    <ShieldAlert className="h-10 w-10 text-zinc-400 mx-auto" />
-                    <h3 className="font-sans text-xl font-light text-white">Security Verification Required</h3>
-                    <p className="font-sans text-xs text-zinc-500">Provide root passphrase token to decode the partner applications database.</p>
+                    <ShieldAlert className="h-10 w-10 text-black mx-auto" />
+                    <h3 className="font-sans text-xl font-light text-black">Security Verification Required</h3>
+                    <p className="font-sans text-xs text-black">Provide root passphrase token to decode the partner applications database.</p>
                   </div>
 
                   <form onSubmit={handleLogin} className="space-y-4">
                     <div className="space-y-1.5">
-                      <label className="font-mono text-[10px] text-zinc-400 uppercase block">Passcode Phrase</label>
+                      <label className="font-mono text-[10px] text-black uppercase block">Passcode Phrase</label>
                       <input
                         type="password"
                         required
@@ -302,7 +302,7 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
                         value={passcode}
                         placeholder={lockoutTime ? 'MATRIX LOCKOUT ACTIVE' : 'Enter admin passcode...'}
                         onChange={(e) => setPasscode(e.target.value)}
-                        className="w-full rounded-none border border-zinc-800 bg-black p-3 font-mono text-xs text-white focus:border-zinc-500 focus:outline-none transition-colors text-center uppercase tracking-widest disabled:opacity-40"
+                        className="w-full rounded-none border border-zinc-200 bg-[#FDFBF7] p-3 font-mono text-xs text-black focus:border-zinc-500 focus:outline-none transition-colors text-center uppercase tracking-widest disabled:opacity-40"
                       />
                     </div>
 
@@ -313,14 +313,14 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
                     )}
 
                     {lockoutTime && (
-                      <div className="p-4 border border-zinc-800 bg-zinc-950/40 text-center space-y-1.5">
+                      <div className="p-4 border border-zinc-200 bg-white/40 text-center space-y-1.5">
                         <span className="font-mono text-[10px] text-red-500 uppercase tracking-widest block font-bold">
                           ★★★ COOLDOWN ACTIVE ★★★
                         </span>
-                        <p className="font-sans text-xs text-zinc-400">
+                        <p className="font-sans text-xs text-black">
                           Secure mainframe locked due to multiple wrong inputs. Remaining lockout duration:
                         </p>
-                        <span className="font-mono text-lg text-white font-bold block">
+                        <span className="font-mono text-lg text-black font-bold block">
                           {formatTime(timeRemaining)}
                         </span>
                       </div>
@@ -341,12 +341,12 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-900 pb-4">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="font-sans text-xl font-light text-white">Registered Candidate Applicants</h3>
-                        <span className="px-2 py-0.5 bg-zinc-900 border border-zinc-800 text-emerald-400 font-mono text-xs">
+                        <h3 className="font-sans text-xl font-light text-black">Registered Candidate Applicants</h3>
+                        <span className="px-2 py-0.5 bg-zinc-900 border border-zinc-200 text-black font-mono text-xs">
                           {applications.length} Total
                         </span>
                       </div>
-                      <p className="font-sans text-xs text-zinc-500 mt-0.5">
+                      <p className="font-sans text-xs text-black mt-0.5">
                         Real-time intake proposals loaded from backend memory bank & sync database.
                       </p>
                     </div>
@@ -354,9 +354,9 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
                       <button
                         onClick={loadApplications}
                         disabled={isSyncing}
-                        className="px-3 py-1.5 font-mono text-[10px] text-zinc-300 border border-zinc-800 hover:bg-zinc-900 transition-all uppercase flex items-center gap-1.5 disabled:opacity-50"
+                        className="px-3 py-1.5 font-mono text-[10px] text-black border border-zinc-200 hover:bg-zinc-900 transition-all uppercase flex items-center gap-1.5 disabled:opacity-50"
                       >
-                        <RefreshCw className={`h-3 w-3 ${isSyncing ? 'animate-spin text-emerald-400' : ''}`} />
+                        <RefreshCw className={`h-3 w-3 ${isSyncing ? 'animate-spin text-black' : ''}`} />
                         [ Sync Database ]
                       </button>
                       {applications.length > 0 && (
@@ -378,41 +378,41 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Filter candidates by name, handle, skills, or proof of work..."
-                        className="w-full bg-zinc-950 border border-zinc-800 p-2 font-mono text-xs text-zinc-200 focus:outline-none focus:border-zinc-600"
+                        className="w-full bg-white border border-zinc-200 p-2 font-mono text-xs text-black focus:outline-none focus:border-zinc-600"
                       />
                     </div>
                   )}
 
                   {filteredApplications.length === 0 ? (
-                    <div className="text-center py-16 border border-dashed border-zinc-900 bg-zinc-950/10">
-                      <span className="font-mono text-xs text-zinc-600 uppercase block">Zero Transmission Packets Logged</span>
-                      <p className="font-sans text-xs text-zinc-500 mt-1">
+                    <div className="text-center py-16 border border-dashed border-zinc-900 bg-white/10">
+                      <span className="font-mono text-xs text-black uppercase block">Zero Transmission Packets Logged</span>
+                      <p className="font-sans text-xs text-black mt-1">
                         {searchQuery ? 'No candidates matched your search query.' : 'No applications have been sent or saved yet.'}
                       </p>
                     </div>
                   ) : (
                     <div className="space-y-6">
                       {filteredApplications.map((app, idx) => (
-                        <div key={app.id || idx} className="border border-zinc-850 bg-zinc-950/20 p-5 space-y-4 rounded-none">
+                        <div key={app.id || idx} className="border border-zinc-850 bg-white/20 p-5 space-y-4 rounded-none">
                           <div className="flex flex-col sm:flex-row justify-between items-start gap-2 border-b border-zinc-900 pb-3">
                             <div>
                               <div className="flex items-center gap-2">
-                                <h4 className="font-sans text-base font-semibold text-white">{app.name}</h4>
-                                <span className="font-mono text-[9px] text-emerald-400 bg-emerald-950/60 border border-emerald-900 px-1.5 py-0.2 uppercase">
+                                <h4 className="font-sans text-base font-semibold text-black">{app.name}</h4>
+                                <span className="font-mono text-[9px] text-black bg-emerald-950/60 border border-emerald-900 px-1.5 py-0.2 uppercase">
                                   Synced
                                 </span>
                               </div>
-                              <p className="font-mono text-[10px] text-zinc-500 uppercase mt-0.5">
-                                Age: {app.age} | Grade: {app.schoolGrade} | Instagram: <span className="text-emerald-400">{app.instagram}</span>
+                              <p className="font-mono text-[10px] text-black uppercase mt-0.5">
+                                Age: {app.age} | Grade: {app.schoolGrade} | Instagram: <span className="text-black">{app.instagram}</span>
                               </p>
                             </div>
                             <div className="flex items-center gap-3">
-                              <span className="font-mono text-[10px] text-zinc-500 flex items-center gap-1">
+                              <span className="font-mono text-[10px] text-black flex items-center gap-1">
                                 <Calendar className="h-3 w-3" /> {app.date}
                               </span>
                               <button
                                 onClick={() => handleDeleteApplication(idx)}
-                                className="text-zinc-600 hover:text-rose-400 transition-colors p-1"
+                                className="text-black hover:text-rose-400 transition-colors p-1"
                                 title="Delete application record"
                               >
                                 <Trash2 className="h-4 w-4" />
@@ -424,55 +424,55 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
                             {/* Left Side */}
                             <div className="space-y-3">
                               <div>
-                                <span className="font-mono text-[9px] text-zinc-500 uppercase block">Source channel</span>
-                                <p className="text-zinc-300 font-medium">{app.heardFrom}</p>
+                                <span className="font-mono text-[9px] text-black uppercase block">Source channel</span>
+                                <p className="text-black font-medium">{app.heardFrom}</p>
                               </div>
                               <div>
-                                <span className="font-mono text-[9px] text-zinc-500 uppercase block">Availability / Hours commitment</span>
-                                <p className="text-zinc-300 font-medium">{app.hoursPerWeek} hours/week</p>
-                                <p className="text-zinc-400 text-[11px] mt-0.5">{app.freeTimes}</p>
+                                <span className="font-mono text-[9px] text-black uppercase block">Availability / Hours commitment</span>
+                                <p className="text-black font-medium">{app.hoursPerWeek} hours/week</p>
+                                <p className="text-black text-[11px] mt-0.5">{app.freeTimes}</p>
                                 {app.conflicts && <p className="text-rose-400/80 text-[11px] italic mt-0.5">Conflicts: {app.conflicts}</p>}
                               </div>
                               <div>
-                                <span className="font-mono text-[9px] text-zinc-500 uppercase block">Selected Skills Matrix</span>
+                                <span className="font-mono text-[9px] text-black uppercase block">Selected Skills Matrix</span>
                                 <div className="flex flex-wrap gap-1 mt-1">
                                   {app.selectedSkills?.map((s: string, sIdx: number) => (
-                                    <span key={sIdx} className="bg-zinc-900 border border-zinc-800 text-white font-mono text-[9px] px-2 py-0.5 uppercase">
+                                    <span key={sIdx} className="bg-zinc-900 border border-zinc-200 text-black font-mono text-[9px] px-2 py-0.5 uppercase">
                                       {s}
                                     </span>
                                   ))}
                                 </div>
                               </div>
                               <div>
-                                <span className="font-mono text-[9px] text-zinc-500 uppercase block">Description of Past Work</span>
-                                <p className="text-zinc-300 leading-relaxed whitespace-pre-wrap">{app.proofOfWork}</p>
+                                <span className="font-mono text-[9px] text-black uppercase block">Description of Past Work</span>
+                                <p className="text-black leading-relaxed whitespace-pre-wrap">{app.proofOfWork}</p>
                               </div>
                             </div>
 
                             {/* Right Side */}
                             <div className="space-y-3 border-t md:border-t-0 md:border-l border-zinc-900 pt-3 md:pt-0 md:pl-4">
                               <div>
-                                <span className="font-mono text-[9px] text-zinc-500 uppercase block">Why work with Geph?</span>
-                                <p className="text-zinc-300 leading-relaxed">{app.whyWork}</p>
+                                <span className="font-mono text-[9px] text-black uppercase block">Why work with Geph?</span>
+                                <p className="text-black leading-relaxed">{app.whyWork}</p>
                               </div>
                               <div>
-                                <span className="font-mono text-[9px] text-zinc-500 uppercase block">Self-starter scenario</span>
-                                <p className="text-zinc-300 leading-relaxed">{app.finishHardThing}</p>
+                                <span className="font-mono text-[9px] text-black uppercase block">Self-starter scenario</span>
+                                <p className="text-black leading-relaxed">{app.finishHardThing}</p>
                               </div>
                               <div>
-                                <span className="font-mono text-[9px] text-zinc-500 uppercase block">Zero instructions triage strategy</span>
-                                <p className="text-zinc-300 leading-relaxed">{app.zeroInstructions}</p>
+                                <span className="font-mono text-[9px] text-black uppercase block">Zero instructions triage strategy</span>
+                                <p className="text-black leading-relaxed">{app.zeroInstructions}</p>
                               </div>
                               <div className="grid grid-cols-2 gap-2 pt-1">
-                                <div className="bg-zinc-950 p-2 border border-zinc-900 text-center">
-                                  <span className="font-mono text-[8px] text-zinc-500 uppercase block">Fixed Pay split ok?</span>
-                                  <span className={`font-mono text-xs uppercase font-bold ${app.okayWithFixedPay === 'yes' ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                <div className="bg-white p-2 border border-zinc-900 text-center">
+                                  <span className="font-mono text-[8px] text-black uppercase block">Fixed Pay split ok?</span>
+                                  <span className={`font-mono text-xs uppercase font-bold ${app.okayWithFixedPay === 'yes' ? 'text-black' : 'text-rose-400'}`}>
                                     {app.okayWithFixedPay}
                                   </span>
                                 </div>
-                                <div className="bg-zinc-950 p-2 border border-zinc-900 text-center">
-                                  <span className="font-mono text-[8px] text-zinc-500 uppercase block">Confidentiality ok?</span>
-                                  <span className={`font-mono text-xs uppercase font-bold ${app.keepConfidential === 'yes' ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                <div className="bg-white p-2 border border-zinc-900 text-center">
+                                  <span className="font-mono text-[8px] text-black uppercase block">Confidentiality ok?</span>
+                                  <span className={`font-mono text-xs uppercase font-bold ${app.keepConfidential === 'yes' ? 'text-black' : 'text-rose-400'}`}>
                                     {app.keepConfidential}
                                   </span>
                                 </div>
@@ -482,7 +482,7 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
 
                           <div className="border-t border-zinc-900 pt-3 space-y-1.5">
                             <span className="font-mono text-[9px] text-rose-400 uppercase tracking-wider block font-bold">★ Executed Trial Task Submission</span>
-                            <div className="bg-black border border-zinc-900 p-3 font-mono text-xs text-zinc-300 whitespace-pre-wrap leading-relaxed max-h-48 overflow-y-auto">
+                            <div className="bg-[#FDFBF7] border border-zinc-900 p-3 font-mono text-xs text-black whitespace-pre-wrap leading-relaxed max-h-48 overflow-y-auto">
                               {app.trialSubmission}
                             </div>
                           </div>

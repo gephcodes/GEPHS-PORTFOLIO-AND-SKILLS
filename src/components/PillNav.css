@@ -118,6 +118,8 @@
 }
 
 .pill .pill-label {
+  text-shadow: 0 4px 20px rgba(0,0,0,1), 0 0 40px rgba(0,0,0,0.8);
+  font-weight: 800;
   position: relative;
   z-index: 2;
   display: inline-block;
@@ -126,6 +128,8 @@
 }
 
 .pill .pill-label-hover {
+  text-shadow: 0 4px 20px rgba(0,0,0,1), 0 0 40px rgba(0,0,0,0.8);
+  font-weight: 800;
   position: absolute;
   left: 0;
   top: 0;

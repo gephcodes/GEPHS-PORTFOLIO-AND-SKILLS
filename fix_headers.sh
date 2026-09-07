@@ -1,0 +1,9 @@
+sed -i 's/className="font-mono text-xs text-black uppercase tracking-\[0.2em\] font-bold"/className="font-mono text-xs text-white uppercase tracking-\[0.2em\] font-bold \[text-shadow:0_4px_20px_rgba(0,0,0,1),0_0_40px_rgba(0,0,0,0.8)\]"/g' src/components/Certificates.tsx
+sed -i 's/className="font-sans text-3xl font-bold tracking-tight text-black md:text-5xl uppercase"/className="font-sans text-3xl font-extrabold tracking-tight text-white md:text-5xl uppercase \[text-shadow:0_4px_20px_rgba(0,0,0,1),0_0_40px_rgba(0,0,0,0.8)\]"/g' src/components/Certificates.tsx
+
+sed -i 's/className="font-mono text-xs text-black uppercase tracking-\[0.2em\] block mb-2"/className="font-mono text-xs text-white uppercase tracking-\[0.2em\] block mb-2 font-bold \[text-shadow:0_4px_20px_rgba(0,0,0,1),0_0_40px_rgba(0,0,0,0.8)\]"/g' src/components/Projects.tsx
+sed -i 's/className="font-sans text-3xl font-light tracking-tight text-black md:text-4xl"/className="font-sans text-3xl font-extrabold tracking-tight text-white md:text-4xl \[text-shadow:0_4px_20px_rgba(0,0,0,1),0_0_40px_rgba(0,0,0,0.8)\]"/g' src/components/Projects.tsx
+sed -i 's/className="font-sans text-lg text-black font-light leading-relaxed max-w-xl"/className="font-sans text-lg text-white font-bold leading-relaxed max-w-xl \[text-shadow:0_4px_20px_rgba(0,0,0,1),0_0_40px_rgba(0,0,0,0.8)\]"/g' src/components/Projects.tsx
+
+sed -i 's/className="font-mono text-xs text-black uppercase tracking-\[0.2em\] block mb-2"/className="font-mono text-xs text-white uppercase tracking-\[0.2em\] block mb-2 font-bold \[text-shadow:0_4px_20px_rgba(0,0,0,1),0_0_40px_rgba(0,0,0,0.8)\]"/g' src/components/Footer.tsx
+sed -i 's/className="font-sans text-3xl font-bold tracking-tight text-black md:text-4xl uppercase"/className="font-sans text-3xl font-extrabold tracking-tight text-white md:text-4xl uppercase \[text-shadow:0_4px_20px_rgba(0,0,0,1),0_0_40px_rgba(0,0,0,0.8)\]"/g' src/components/Footer.tsx
