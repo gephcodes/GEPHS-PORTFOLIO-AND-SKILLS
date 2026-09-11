@@ -21,7 +21,7 @@ export default function Projects() {
     {
       id: 'mint',
       name: 'Mint',
-      tag: 'Tool',
+      tag: 'Hackathon',
       role: 'Creator',
       description: 'Offline code IDE. Built it in a week just to compete.',
       detailedDescription: 'Offline code IDE. Built it in a week just to compete.',
@@ -67,6 +67,16 @@ export default function Projects() {
       detailedDescription: 'LLM that talks like you. For fun.',
       features: [],
       link: 'https://pulseapp-fptp.onrender.com/?fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGn_HLnIq1BtmdSwxEL72tFpVu5AjBpIIXmVja2V6McIIjsCzg0fjVqy7_Yu1k_aem_WqGPbmgZ5eM--4sOT2uqvw'
+    },
+    {
+      id: 'vantage',
+      name: 'AI Infra Summit Hackathon',
+      tag: 'Hackathon',
+      role: 'Participant',
+      description: 'Built for AI Infra Summit Hackathon.',
+      detailedDescription: 'Built for AI Infra Summit Hackathon.',
+      features: [],
+      link: 'https://vantage-teqg.onrender.com'
     }
   ];
 
@@ -88,6 +98,9 @@ export default function Projects() {
     </div>,
     <div key="p5" className="p-2 h-full flex flex-col items-center justify-center text-center font-sans bg-[#FDFBF7]/80 text-black border border-zinc-200 shadow-sm">
       <h4 className="font-bold text-[12px] text-black tracking-tight leading-none">Pulse</h4>
+    </div>,
+    <div key="vantage" className="p-2 h-full flex flex-col items-center justify-center text-center font-sans bg-[#FDFBF7] text-black border border-zinc-200 shadow-sm">
+      <h4 className="font-bold text-[11px] text-black tracking-tight leading-none">AI Infra</h4>
     </div>
   ];
 
