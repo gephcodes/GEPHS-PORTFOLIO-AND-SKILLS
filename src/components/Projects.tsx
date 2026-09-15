@@ -66,7 +66,7 @@ export default function Projects() {
       description: 'LLM that talks like you. For fun.',
       detailedDescription: 'LLM that talks like you. For fun.',
       features: [],
-      link: 'https://pulseapp-fptp.onrender.com/?fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGn_HLnIq1BtmdSwxEL72tFpVu5AjBpIIXmVja2V6McIIjsCzg0fjVqy7_Yu1k_aem_WqGPbmgZ5eM--4sOT2uqvw'
+      link: 'https://ai.studio/apps/f2c5c6b3-6119-4f55-818a-14779f986139'
     },
     {
       id: 'vantage',
