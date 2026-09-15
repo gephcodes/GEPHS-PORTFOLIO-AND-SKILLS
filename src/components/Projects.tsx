@@ -16,7 +16,7 @@ export default function Projects() {
       detailedDescription: 'Peer support for teens. Anonymous. Real talk.',
       whyBuilt: 'Lost my grandad, friends ghosted me, girl rejected me—all in one year. Figured it out alone. Realized that sucks. Built it so nobody has to.',
       features: [],
-      link: 'https://solvry.onrender.com'
+      link: 'https://solvry-repo.vercel.app'
     },
     {
       id: 'mint',
@@ -76,7 +76,7 @@ export default function Projects() {
       description: 'Built for AI Infra Summit Hackathon.',
       detailedDescription: 'Built for AI Infra Summit Hackathon.',
       features: [],
-      link: 'https://vantage-teqg.onrender.com'
+      link: 'https://vantage-pi-ivory.vercel.app'
     }
   ];
 
