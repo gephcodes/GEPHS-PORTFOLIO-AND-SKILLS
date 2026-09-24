@@ -22,6 +22,13 @@ const certificates = [
     issuer: 'LabLab.ai',
     date: 'Recent',
     link: 'https://lablab.ai/u/@Geph/ai-hackathons/alpaca-ai-trading-agents-hackathon/certificate'
+  },
+  {
+    id: 4,
+    name: 'Infra Summit Hackathon',
+    issuer: 'LabLab.ai',
+    date: 'Recent',
+    link: 'https://lablab.ai/u/@Geph/ai-hackathons/ai-infra-summit-hackathon/certificate'
   }
 ];
 
