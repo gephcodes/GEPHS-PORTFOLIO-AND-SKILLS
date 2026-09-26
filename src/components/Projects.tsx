@@ -77,6 +77,16 @@ export default function Projects() {
       detailedDescription: 'Built for AI Infra Summit Hackathon.',
       features: [],
       link: 'https://vantage-pi-ivory.vercel.app'
+    },
+    {
+      id: 'ibm-bob',
+      name: 'IBM Bob 2.0 Hackathon',
+      tag: 'Hackathon',
+      role: 'Participant',
+      description: 'Built for IBM Bob 2.0 Hackathon.',
+      detailedDescription: 'Built for IBM Bob 2.0 Hackathon.',
+      features: [],
+      link: 'https://cortexibmproject.vercel.app'
     }
   ];
 
@@ -101,6 +111,9 @@ export default function Projects() {
     </div>,
     <div key="vantage" className="p-2 h-full flex flex-col items-center justify-center text-center font-sans bg-[#FDFBF7] text-black border border-zinc-200 shadow-sm">
       <h4 className="font-bold text-[11px] text-black tracking-tight leading-none">AI Infra</h4>
+    </div>,
+    <div key="ibm-bob" className="p-2 h-full flex flex-col items-center justify-center text-center font-sans bg-[#FDFBF7]/80 text-black border border-zinc-200 shadow-sm">
+      <h4 className="font-bold text-[11px] text-black tracking-tight leading-none">IBM Bob 2.0</h4>
     </div>
   ];
 
