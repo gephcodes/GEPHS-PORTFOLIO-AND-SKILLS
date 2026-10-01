@@ -36,18 +36,31 @@ export default function NeuralTunnel({
     let currentMouseX = 0;
     let currentMouseY = 0;
 
-    // High-DPI Canvas Setup
-    const resize = () => {
-      width = container.clientWidth;
-      height = container.clientHeight;
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      ctx.scale(dpr, dpr);
+    // High-DPI Canvas Setup with rAF debouncing to prevent ResizeObserver loop limit errors
+    let resizeRafId: number | null = null;
+    const performResize = () => {
+      if (!container || !canvas || !ctx) return;
+      const newWidth = container.clientWidth;
+      const newHeight = container.clientHeight;
+      if (newWidth === 0 || newHeight === 0) return;
+
+      width = newWidth;
+      height = newHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
-    resize();
-    const resizeObserver = new ResizeObserver(resize);
+    const handleResize = () => {
+      if (resizeRafId !== null) {
+        cancelAnimationFrame(resizeRafId);
+      }
+      resizeRafId = requestAnimationFrame(performResize);
+    };
+
+    performResize();
+    const resizeObserver = new ResizeObserver(handleResize);
     resizeObserver.observe(container);
 
     // Tunnel Engine Configuration
@@ -218,6 +231,9 @@ export default function NeuralTunnel({
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      if (resizeRafId !== null) {
+        cancelAnimationFrame(resizeRafId);
+      }
       resizeObserver.disconnect();
       if (interactive) {
         window.removeEventListener('mousemove', handleMouseMove);

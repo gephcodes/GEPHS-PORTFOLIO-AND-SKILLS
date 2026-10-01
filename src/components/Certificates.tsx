@@ -29,6 +29,13 @@ const certificates = [
     issuer: 'LabLab.ai',
     date: 'Recent',
     link: 'https://lablab.ai/u/@Geph/ai-hackathons/ai-infra-summit-hackathon/certificate'
+  },
+  {
+    id: 5,
+    name: 'IBM Bob 2.0 Hackathon',
+    issuer: 'LabLab.ai',
+    date: 'Recent',
+    link: 'https://lablab.ai/u/@Geph/ai-hackathons/ibm-bob-2-hackathon/certificate'
   }
 ];
 
