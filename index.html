@@ -3,6 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Suppress benign dev server WebSocket error in AI Studio iframe -->
+    <script>
+      (function() {
+        if (typeof window !== 'undefined') {
+          const OrigWS = window.WebSocket;
+          if (OrigWS) {
+            window.WebSocket = function(url, protocols) {
+              if (
+                protocols === 'vite-hmr' ||
+                (typeof url === 'string' && (url.includes('vite-hmr') || url.includes('token=')))
+              ) {
+                const emitter = new EventTarget();
+                emitter.readyState = 1;
+                emitter.OPEN = 1;
+                emitter.send = function() {};
+                emitter.close = function() {};
+                setTimeout(() => {
+                  emitter.dispatchEvent(new Event('open'));
+                }, 0);
+                return emitter;
+              }
+              return new OrigWS(url, protocols);
+            };
+            window.WebSocket.CONNECTING = 0;
+            window.WebSocket.OPEN = 1;
+            window.WebSocket.CLOSING = 2;
+            window.WebSocket.CLOSED = 3;
+          }
+        }
+      })();
+    </script>
     
     <!-- Primary SEO Meta Tags -->
     <title>Gephel Chingtham — Visionary | Technical Director | Entrepreneur | Founder</title>
@@ -56,6 +88,9 @@
 
     <!-- Theme & Display Configuration -->
     <meta name="theme-color" content="#0A122C" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@700&display=swap" rel="stylesheet" />
 
     <!-- Schema.org Structured Data (JSON-LD) for Maximum Google Knowledge Graph & SERP Visibility -->
     <script type="application/ld+json">

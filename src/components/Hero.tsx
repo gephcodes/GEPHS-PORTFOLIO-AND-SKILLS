@@ -18,7 +18,7 @@ export default function Hero({ onWorkClick }: HeroProps) {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col gap-5"
         >
-          <h1 className="font-sans text-5xl font-extrabold tracking-tight text-[#FFFFFF] sm:text-7xl lg:text-8xl">
+          <h1 className="font-sans text-5xl font-extrabold tracking-tight text-[#FFFFFF] sm:text-6xl md:text-7xl">
             Gephel Chingtham
           </h1>
           <p className="font-mono text-base md:text-xl text-[#8E9AAF] tracking-wider uppercase font-semibold">
