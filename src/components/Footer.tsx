@@ -3,7 +3,7 @@ import { Mail, Twitter, Instagram, Copy, Check } from 'lucide-react';
 
 export default function Footer() {
   const [copied, setCopied] = useState(false);
-  const [email] = useState('gephelchingtham08@gmail.com');
+  const [email] = useState('gephelchingtham@gmail.com');
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(email);
