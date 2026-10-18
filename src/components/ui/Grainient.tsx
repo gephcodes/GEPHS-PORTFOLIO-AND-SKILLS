@@ -177,117 +177,141 @@ const Grainient: React.FC<GrainientProps> = ({
     const container = containerRef.current;
     if (!container) return;
 
-    const renderer = new Renderer({
-      webgl: 2,
-      alpha: true,
-      antialias: false,
-      dpr: Math.min(window.devicePixelRatio || 1, 2)
-    });
-
-    const gl = renderer.gl;
-    const canvas = gl.canvas;
-    canvas.style.width = '100%';
-    canvas.style.height = '100%';
-    canvas.style.display = 'block';
-    container.appendChild(canvas);
-
-    const geometry = new Triangle(gl);
-    const program = new Program(gl, {
-      vertex,
-      fragment,
-      uniforms: {
-        iTime:           { value: 0 },
-        iResolution:     { value: new Float32Array([1, 1]) },
-        uTimeSpeed:      { value: 0.25 },
-        uColorBalance:   { value: 0.0 },
-        uWarpStrength:   { value: 1.0 },
-        uWarpFrequency:  { value: 5.0 },
-        uWarpSpeed:      { value: 2.0 },
-        uWarpAmplitude:  { value: 50.0 },
-        uBlendAngle:     { value: 0.0 },
-        uBlendSoftness:  { value: 0.05 },
-        uRotationAmount: { value: 500.0 },
-        uNoiseScale:     { value: 2.0 },
-        uGrainAmount:    { value: 0.1 },
-        uGrainScale:     { value: 2.0 },
-        uGrainAnimated:  { value: 0.0 },
-        uContrast:       { value: 1.5 },
-        uGamma:          { value: 1.0 },
-        uSaturation:     { value: 1.0 },
-        uCenterOffset:   { value: new Float32Array([0, 0]) },
-        uZoom:           { value: 0.9 },
-        uColor1:         { value: new Float32Array([1, 1, 1]) },
-        uColor2:         { value: new Float32Array([1, 1, 1]) },
-        uColor3:         { value: new Float32Array([1, 1, 1]) },
-        uLightMode:      { value: 0.0 }
-      }
-    });
-
-    const mesh = new Mesh(gl, { geometry, program });
-    ctxMap.set(container, { renderer, program, mesh });
-
-    const setSize = () => {
-      if (!container) return;
-      const rect = container.getBoundingClientRect();
-      const w = Math.max(1, Math.floor(rect.width));
-      const h = Math.max(1, Math.floor(rect.height));
-      renderer.setSize(w, h);
-      const res = program.uniforms.iResolution.value;
-      res[0] = gl.drawingBufferWidth;
-      res[1] = gl.drawingBufferHeight;
-      renderer.render({ scene: mesh });
-    };
-
-    let resizeRaf = 0;
-    const handleResize = () => {
-      if (resizeRaf) cancelAnimationFrame(resizeRaf);
-      resizeRaf = requestAnimationFrame(setSize);
-    };
-
-    const ro = new ResizeObserver(handleResize);
-    ro.observe(container);
-    setSize();
-
+    let renderer: Renderer | null = null;
+    let canvas: HTMLCanvasElement | null = null;
     let raf = 0;
-    let isVisible = true;
-    let isPageVisible = !document.hidden;
-    const t0 = performance.now();
+    let resizeRaf = 0;
+    let ro: ResizeObserver | null = null;
+    let io: IntersectionObserver | null = null;
+    let onVisibility: (() => void) | null = null;
 
-    const loop = (t: number) => {
-      program.uniforms.iTime.value = (t - t0) * 0.001;
-      renderer.render({ scene: mesh });
-      raf = requestAnimationFrame(loop);
-    };
+    try {
+      renderer = new Renderer({
+        webgl: 2,
+        alpha: true,
+        antialias: false,
+        dpr: Math.min(window.devicePixelRatio || 1, 2)
+      });
 
-    const tryStart = () => {
-      if (isVisible && isPageVisible && raf === 0) raf = requestAnimationFrame(loop);
-    };
-    const tryStop = () => {
-      if (raf !== 0) { cancelAnimationFrame(raf); raf = 0; }
-    };
+      const gl = renderer.gl;
+      if (!gl) return;
 
-    const io = new IntersectionObserver(
-      ([entry]) => { isVisible = entry.isIntersecting; isVisible ? tryStart() : tryStop(); },
-      { threshold: 0 }
-    );
-    io.observe(container);
+      canvas = gl.canvas;
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.style.display = 'block';
+      container.appendChild(canvas);
 
-    const onVisibility = () => {
-      isPageVisible = !document.hidden;
-      isPageVisible ? tryStart() : tryStop();
-    };
-    document.addEventListener('visibilitychange', onVisibility);
+      const geometry = new Triangle(gl);
+      const program = new Program(gl, {
+        vertex,
+        fragment,
+        uniforms: {
+          iTime:           { value: 0 },
+          iResolution:     { value: new Float32Array([1, 1]) },
+          uTimeSpeed:      { value: 0.25 },
+          uColorBalance:   { value: 0.0 },
+          uWarpStrength:   { value: 1.0 },
+          uWarpFrequency:  { value: 5.0 },
+          uWarpSpeed:      { value: 2.0 },
+          uWarpAmplitude:  { value: 50.0 },
+          uBlendAngle:     { value: 0.0 },
+          uBlendSoftness:  { value: 0.05 },
+          uRotationAmount: { value: 500.0 },
+          uNoiseScale:     { value: 2.0 },
+          uGrainAmount:    { value: 0.1 },
+          uGrainScale:     { value: 2.0 },
+          uGrainAnimated:  { value: 0.0 },
+          uContrast:       { value: 1.5 },
+          uGamma:          { value: 1.0 },
+          uSaturation:     { value: 1.0 },
+          uCenterOffset:   { value: new Float32Array([0, 0]) },
+          uZoom:           { value: 0.9 },
+          uColor1:         { value: new Float32Array([1, 1, 1]) },
+          uColor2:         { value: new Float32Array([1, 1, 1]) },
+          uColor3:         { value: new Float32Array([1, 1, 1]) },
+          uLightMode:      { value: 0.0 }
+        }
+      });
 
-    tryStart();
+      const mesh = new Mesh(gl, { geometry, program });
+      ctxMap.set(container, { renderer, program, mesh });
+
+      const setSize = () => {
+        if (!container || !renderer || gl.isContextLost?.()) return;
+        try {
+          const rect = container.getBoundingClientRect();
+          const w = Math.max(1, Math.floor(rect.width));
+          const h = Math.max(1, Math.floor(rect.height));
+          renderer.setSize(w, h);
+          const res = program.uniforms.iResolution.value;
+          res[0] = gl.drawingBufferWidth || w;
+          res[1] = gl.drawingBufferHeight || h;
+          renderer.render({ scene: mesh });
+        } catch {
+          // Handled gracefully
+        }
+      };
+
+      const handleResize = () => {
+        if (resizeRaf) cancelAnimationFrame(resizeRaf);
+        resizeRaf = requestAnimationFrame(setSize);
+      };
+
+      ro = new ResizeObserver(handleResize);
+      ro.observe(container);
+      setSize();
+
+      let isVisible = true;
+      let isPageVisible = !document.hidden;
+      const t0 = performance.now();
+
+      const loop = (t: number) => {
+        if (!gl.isContextLost?.()) {
+          try {
+            program.uniforms.iTime.value = (t - t0) * 0.001;
+            renderer?.render({ scene: mesh });
+          } catch {
+            // Handled gracefully
+          }
+        }
+        raf = requestAnimationFrame(loop);
+      };
+
+      const tryStart = () => {
+        if (isVisible && isPageVisible && raf === 0) raf = requestAnimationFrame(loop);
+      };
+      const tryStop = () => {
+        if (raf !== 0) { cancelAnimationFrame(raf); raf = 0; }
+      };
+
+      io = new IntersectionObserver(
+        ([entry]) => { isVisible = entry.isIntersecting; isVisible ? tryStart() : tryStop(); },
+        { threshold: 0 }
+      );
+      io.observe(container);
+
+      onVisibility = () => {
+        isPageVisible = !document.hidden;
+        isPageVisible ? tryStart() : tryStop();
+      };
+      document.addEventListener('visibilitychange', onVisibility);
+
+      tryStart();
+    } catch {
+      // Safe fallback if WebGL 2 is unavailable or restricted
+    }
 
     return () => {
-      tryStop();
-      if (resizeRaf) cancelAnimationFrame(resizeRaf);
-      ro.disconnect();
-      io.disconnect();
-      document.removeEventListener('visibilitychange', onVisibility);
+      if (raf !== 0) cancelAnimationFrame(raf);
+      if (resizeRaf !== 0) cancelAnimationFrame(resizeRaf);
+      ro?.disconnect();
+      io?.disconnect();
+      if (onVisibility) document.removeEventListener('visibilitychange', onVisibility);
       ctxMap.delete(container);
-      try { container.removeChild(canvas); } catch { /* ignore */ }
+      if (canvas && container.contains(canvas)) {
+        try { container.removeChild(canvas); } catch { /* ignore */ }
+      }
     };
   }, []); // renderer created once
 
@@ -297,31 +321,35 @@ const Grainient: React.FC<GrainientProps> = ({
     if (!container) return;
     const ctx = ctxMap.get(container);
     if (!ctx) return;
-    const { program } = ctx;
-    const u = program.uniforms;
+    try {
+      const { program } = ctx;
+      const u = program.uniforms;
 
-    u.uTimeSpeed.value      = timeSpeed;
-    u.uColorBalance.value   = colorBalance;
-    u.uWarpStrength.value   = warpStrength;
-    u.uWarpFrequency.value  = warpFrequency;
-    u.uWarpSpeed.value      = warpSpeed;
-    u.uWarpAmplitude.value  = warpAmplitude;
-    u.uBlendAngle.value     = blendAngle;
-    u.uBlendSoftness.value  = blendSoftness;
-    u.uRotationAmount.value = rotationAmount;
-    u.uNoiseScale.value     = noiseScale;
-    u.uGrainAmount.value    = grainAmount;
-    u.uGrainScale.value     = grainScale;
-    u.uGrainAnimated.value  = grainAnimated ? 1.0 : 0.0;
-    u.uContrast.value       = contrast;
-    u.uGamma.value          = gamma;
-    u.uSaturation.value     = saturation;
-    u.uCenterOffset.value   = new Float32Array([centerX, centerY]);
-    u.uZoom.value           = zoom;
-    u.uColor1.value         = new Float32Array(hexToRgb(color1));
-    u.uColor2.value         = new Float32Array(hexToRgb(color2));
-    u.uColor3.value         = new Float32Array(hexToRgb(color3));
-    u.uLightMode.value      = lightMode ? 1.0 : 0.0;
+      u.uTimeSpeed.value      = timeSpeed;
+      u.uColorBalance.value   = colorBalance;
+      u.uWarpStrength.value   = warpStrength;
+      u.uWarpFrequency.value  = warpFrequency;
+      u.uWarpSpeed.value      = warpSpeed;
+      u.uWarpAmplitude.value  = warpAmplitude;
+      u.uBlendAngle.value     = blendAngle;
+      u.uBlendSoftness.value  = blendSoftness;
+      u.uRotationAmount.value = rotationAmount;
+      u.uNoiseScale.value     = noiseScale;
+      u.uGrainAmount.value    = grainAmount;
+      u.uGrainScale.value     = grainScale;
+      u.uGrainAnimated.value  = grainAnimated ? 1.0 : 0.0;
+      u.uContrast.value       = contrast;
+      u.uGamma.value          = gamma;
+      u.uSaturation.value     = saturation;
+      u.uCenterOffset.value   = new Float32Array([centerX, centerY]);
+      u.uZoom.value           = zoom;
+      u.uColor1.value         = new Float32Array(hexToRgb(color1));
+      u.uColor2.value         = new Float32Array(hexToRgb(color2));
+      u.uColor3.value         = new Float32Array(hexToRgb(color3));
+      u.uLightMode.value      = lightMode ? 1.0 : 0.0;
+    } catch {
+      // Handled gracefully
+    }
   }, [
     timeSpeed, colorBalance, warpStrength, warpFrequency, warpSpeed,
     warpAmplitude, blendAngle, blendSoftness, rotationAmount, noiseScale,
