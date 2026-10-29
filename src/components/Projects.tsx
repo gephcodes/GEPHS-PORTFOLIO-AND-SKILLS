@@ -56,7 +56,7 @@ export default function Projects() {
       description: 'High-end fragrance game. Seasonal. Personal brand.',
       detailedDescription: 'High-end fragrance game. Seasonal. Personal brand.',
       features: [],
-      link: 'https://scentpreview.onrender.com/'
+      link: 'https://www.scentpreview.in'
     },
     {
       id: 'pulse',
