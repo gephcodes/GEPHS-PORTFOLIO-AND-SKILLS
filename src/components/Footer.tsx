@@ -54,24 +54,24 @@ export default function Footer() {
             
             <div className="flex flex-col gap-3 font-mono text-xs">
               <a 
-                href="https://x.com/8geph" 
+                href="https://x.com/GephelChingtham" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="flex items-center gap-3 text-[#F9F6F0] hover:text-[#FFFFFF] transition-colors group py-1 border-b border-zinc-800 hover:border-zinc-700"
               >
                 <Twitter className="h-4 w-4 text-[#8E9AAF]" />
-                <span>X / Twitter: <strong className="text-[#FFFFFF]">@8geph</strong></span>
+                <span>X / Twitter: <strong className="text-[#FFFFFF]">@GephelChingtham</strong></span>
                 <span className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">→</span>
               </a>
               
               <a 
-                href="https://www.instagram.com/gephelchingtham/" 
+                href="https://www.instagram.com/gephchingtham/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="flex items-center gap-3 text-[#F9F6F0] hover:text-[#FFFFFF] transition-colors group py-1 border-b border-zinc-800 hover:border-zinc-700"
               >
                 <Instagram className="h-4 w-4 text-[#8E9AAF]" />
-                <span>Instagram: <strong className="text-[#FFFFFF]">@gephelchingtham</strong></span>
+                <span>Instagram: <strong className="text-[#FFFFFF]">@gephchingtham</strong></span>
                 <span className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">→</span>
               </a>
 
