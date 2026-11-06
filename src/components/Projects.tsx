@@ -19,6 +19,44 @@ export default function Projects() {
       link: 'https://solvry-repo.vercel.app'
     },
     {
+      id: 'scentpreview',
+      name: 'Scent Preview',
+      tag: 'Brand',
+      role: 'Creator',
+      description: 'High-end fragrance game. Seasonal. Personal brand.',
+      detailedDescription: 'High-end fragrance game. Seasonal. Personal brand.',
+      features: [],
+      link: 'https://www.scentpreview.in'
+    },
+    {
+      id: 'emberline',
+      name: 'Emberline',
+      tag: 'NASA ISAC 26',
+      role: 'Creator',
+      description: 'Interactive fire map with 20 years of wildfire data powered by NASA MODIS and VIIRS satellite sensors.',
+      detailedDescription: 'Wildfire tracking and historical visualization platform processing 20 years of active fire data from NASA MODIS and VIIRS satellite instruments.',
+      features: [
+        '20-year historical wildfire dataset visualization',
+        'NASA MODIS & VIIRS satellite data integration',
+        'Interactive geospatial fire map & cluster analytics'
+      ],
+      link: 'https://emberline-armc.onrender.com'
+    },
+    {
+      id: 'kannvvass',
+      name: 'kannvvass',
+      tag: 'Agency',
+      role: 'Founder',
+      description: 'Creative engineering and design freelancing agency building digital experiences, brands, and web products.',
+      detailedDescription: 'Full-service digital agency focused on high-craft web development, product engineering, design systems, and bespoke digital client solutions.',
+      features: [
+        'End-to-end design & full-stack development',
+        'Brand identity, UI/UX systems & digital craftsmanship',
+        'High-performance production web architecture'
+      ],
+      link: 'https://kannvvas.vercel.app'
+    },
+    {
       id: 'mint',
       name: 'Mint',
       tag: 'Hackathon',
@@ -47,16 +85,6 @@ export default function Projects() {
       detailedDescription: 'Track your goals. Actually finish them.',
       features: [],
       link: 'https://goalplan-ai-385962461092.asia-southeast1.run.app/'
-    },
-    {
-      id: 'scentpreview',
-      name: 'Scent Preview',
-      tag: 'Brand',
-      role: 'Creator',
-      description: 'High-end fragrance game. Seasonal. Personal brand.',
-      detailedDescription: 'High-end fragrance game. Seasonal. Personal brand.',
-      features: [],
-      link: 'https://www.scentpreview.in'
     },
     {
       id: 'pulse',
