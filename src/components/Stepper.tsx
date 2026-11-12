@@ -8,6 +8,8 @@ export interface StepperProps {
   initialStep?: number;
   onStepChange?: (step: number) => void;
   onFinalStepCompleted?: () => void;
+  validateStep?: (step: number) => boolean;
+  onValidationError?: () => void;
   stepCircleContainerClassName?: string;
   stepContainerClassName?: string;
   contentClassName?: string;
@@ -30,6 +32,8 @@ export default function Stepper({
   initialStep = 1,
   onStepChange = () => {},
   onFinalStepCompleted = () => {},
+  validateStep,
+  onValidationError = () => {},
   stepCircleContainerClassName = '',
   stepContainerClassName = '',
   contentClassName = '',
@@ -66,6 +70,10 @@ export default function Stepper({
   };
 
   const handleNext = () => {
+    if (validateStep && !validateStep(currentStep)) {
+      onValidationError();
+      return;
+    }
     if (!isLastStep) {
       setDirection(1);
       updateStep(currentStep + 1);
@@ -73,6 +81,10 @@ export default function Stepper({
   };
 
   const handleComplete = () => {
+    if (validateStep && !validateStep(currentStep)) {
+      onValidationError();
+      return;
+    }
     setDirection(1);
     updateStep(totalSteps + 1);
   };
@@ -273,7 +285,7 @@ function StepIndicator({ step, currentStep, onClickStep, disableStepIndicators }
 
 function StepConnector({ isComplete }: { isComplete: boolean }) {
   const lineVariants = {
-    incomplete: { width: '0%', backgroundColor: 'transparent' },
+    incomplete: { width: '0%', backgroundColor: 'rgba(5, 150, 105, 0)' },
     complete: { width: '100%', backgroundColor: '#059669' }
   };
 

@@ -9,11 +9,9 @@ import Hero from './components/Hero';
 import Projects from './components/Projects';
 import Certificates from './components/Certificates';
 import Footer from './components/Footer';
-import WorkWithMeModal from './components/WorkWithMeModal';
 import AdminModal from './components/AdminModal';
 
 export default function App() {
-  const [isWorkModalOpen, setIsWorkModalOpen] = useState(false);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
 
   const handleScrollToContact = () => {
@@ -59,19 +57,14 @@ export default function App() {
       <div className="relative z-10">
         <Navbar 
           onContactClick={handleScrollToContact}
-          onWorkClick={() => setIsWorkModalOpen(true)}
           onLogoClick={handleLogoAction}
         />
         <main>
-          <Hero onWorkClick={() => setIsWorkModalOpen(true)} />
+          <Hero />
           <Projects />
           <Certificates />
         </main>
         <Footer />
-        <WorkWithMeModal 
-          isOpen={isWorkModalOpen}
-          onClose={() => setIsWorkModalOpen(false)} 
-        />
         <AdminModal
           isOpen={isAdminModalOpen}
           onClose={() => setIsAdminModalOpen(false)}

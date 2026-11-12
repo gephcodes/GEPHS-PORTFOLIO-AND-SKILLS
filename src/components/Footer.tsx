@@ -21,7 +21,7 @@ export default function Footer() {
         <div className="max-w-2xl mx-auto text-center space-y-12 mb-20">
           <div>
             <h2 className="font-sans text-3xl font-extrabold tracking-tight text-[#FFFFFF] md:text-4xl uppercase">
-              GET AT ME
+              REACH OUT TO ME
             </h2>
           </div>
 
@@ -59,7 +59,9 @@ export default function Footer() {
                 rel="noopener noreferrer" 
                 className="flex items-center gap-3 text-[#F9F6F0] hover:text-[#FFFFFF] transition-colors group py-1 border-b border-zinc-800 hover:border-zinc-700"
               >
-                <Twitter className="h-4 w-4 text-[#8E9AAF]" />
+                <svg className="h-4 w-4 fill-current text-[#8E9AAF]" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
                 <span>X / Twitter: <strong className="text-[#FFFFFF]">@GephelChingtham</strong></span>
                 <span className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">→</span>
               </a>

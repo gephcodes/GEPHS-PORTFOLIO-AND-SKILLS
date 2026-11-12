@@ -4,7 +4,6 @@ import PillNav from './PillNav';
 
 interface NavbarProps {
   onContactClick: () => void;
-  onWorkClick: () => void;
   onLogoClick: () => void;
 }
 
@@ -13,7 +12,7 @@ const navItems = [
   { label: 'Certificates', href: '#certificates' }
 ];
 
-export default function Navbar({ onContactClick, onWorkClick, onLogoClick }: NavbarProps) {
+export default function Navbar({ onContactClick, onLogoClick }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
@@ -90,13 +89,6 @@ export default function Navbar({ onContactClick, onWorkClick, onLogoClick }: Nav
 
             <div className="hidden md:flex items-center gap-3 shrink-0">
               <button
-                onClick={onWorkClick}
-                className="group flex items-center gap-1.5 border border-zinc-700 px-3.5 py-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-[#F9F6F0] transition-all hover:bg-zinc-800"
-              >
-                Work with me
-                <span className="text-[#FFFFFF] animate-pulse">●</span>
-              </button>
-              <button
                 onClick={onContactClick}
                 className="group flex items-center gap-1.5 bg-[#FFFFFF] px-3.5 py-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-[#0A122C] transition-all hover:bg-[#8E9AAF]"
               >
@@ -136,16 +128,6 @@ export default function Navbar({ onContactClick, onWorkClick, onLogoClick }: Nav
               </a>
             ))}
             <hr className="border-zinc-800 my-2" />
-            <button
-              onClick={() => {
-                setIsOpen(false);
-                onWorkClick();
-              }}
-              className="flex w-full items-center justify-between text-left font-display text-xl font-medium tracking-tight text-[#F9F6F0] hover:text-[#FFFFFF]"
-            >
-              <span>Work with me</span>
-              <span className="text-[#FFFFFF] animate-pulse text-sm">●</span>
-            </button>
             <button
               onClick={() => {
                 setIsOpen(false);
