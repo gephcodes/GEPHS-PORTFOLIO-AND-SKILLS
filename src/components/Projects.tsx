@@ -29,8 +29,8 @@ export default function Projects() {
       link: 'https://www.scentpreview.in'
     },
     {
-      id: 'emberline',
-      name: 'Emberline',
+      id: 'thermyx',
+      name: 'THERMYX',
       tag: 'NASA ISAC 26',
       role: 'Creator',
       description: 'A smart live map that processes 20 years of NASA satellite data to track where dangerous wildfires are burning across the globe right now.',
@@ -40,7 +40,7 @@ export default function Projects() {
         'NASA MODIS & VIIRS satellite data integration',
         'Real-time active fire tracking & geospatial analytics'
       ],
-      link: 'https://emberline-armc.onrender.com'
+      link: 'https://thermyx.vercel.app'
     },
     {
       id: 'kannvvas',
