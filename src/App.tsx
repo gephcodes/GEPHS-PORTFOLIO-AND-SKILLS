@@ -2,7 +2,7 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Grainient from './components/ui/Grainient';
 import Hero from './components/Hero';
@@ -10,9 +10,48 @@ import Projects from './components/Projects';
 import Certificates from './components/Certificates';
 import Footer from './components/Footer';
 import AdminModal from './components/AdminModal';
+import NasaCertificatePage from './components/NasaCertificatePage';
+
+const DEFAULT_TITLE = 'Gephel Chingtham — Visionary | Technical Director | Entrepreneur | Founder';
+const NASA_CERT_TITLE = 'NASA Space Apps Challenge 2026 Certificate — Gephel Chingtham';
+
+function isNasaCertRoute() {
+  if (typeof window === 'undefined') return false;
+  const normalizedPath = window.location.pathname.toLowerCase().replace(/\/+$/, '');
+  const hostname = window.location.hostname.toLowerCase();
+  return (
+    normalizedPath === '/nasaisac26certificate' ||
+    hostname.startsWith('nasaisac26certificate.')
+  );
+}
 
 export default function App() {
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
+  const [isNasaCert, setIsNasaCert] = useState<boolean>(isNasaCertRoute);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setIsNasaCert(isNasaCertRoute());
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  useEffect(() => {
+    document.title = isNasaCert ? NASA_CERT_TITLE : DEFAULT_TITLE;
+  }, [isNasaCert]);
+
+  const handleBackToPortfolio = () => {
+    window.history.pushState({}, '', '/');
+    setIsNasaCert(false);
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+  };
+
+  const handleOpenCertificate = (path: string) => {
+    window.history.pushState({}, '', path);
+    setIsNasaCert(isNasaCertRoute());
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+  };
 
   const handleScrollToContact = () => {
     const contactSection = document.getElementById('contact');
@@ -55,20 +94,26 @@ export default function App() {
         />
       </div>
       <div className="relative z-10">
-        <Navbar 
-          onContactClick={handleScrollToContact}
-          onLogoClick={handleLogoAction}
-        />
-        <main>
-          <Hero />
-          <Projects />
-          <Certificates />
-        </main>
-        <Footer />
-        <AdminModal
-          isOpen={isAdminModalOpen}
-          onClose={() => setIsAdminModalOpen(false)}
-        />
+        {isNasaCert ? (
+          <NasaCertificatePage onBackToPortfolio={handleBackToPortfolio} />
+        ) : (
+          <>
+            <Navbar 
+              onContactClick={handleScrollToContact}
+              onLogoClick={handleLogoAction}
+            />
+            <main>
+              <Hero />
+              <Projects />
+              <Certificates onOpenCertificate={handleOpenCertificate} />
+            </main>
+            <Footer />
+            <AdminModal
+              isOpen={isAdminModalOpen}
+              onClose={() => setIsAdminModalOpen(false)}
+            />
+          </>
+        )}
       </div>
     </div>
   );
